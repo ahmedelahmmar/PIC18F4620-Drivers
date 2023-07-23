@@ -1,5 +1,5 @@
 /**
- * @file device_config.c
+ * @file mcu_config.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
  * @brief 
  * @version 0.1
@@ -8,11 +8,10 @@
  * @copyright Copyright (c) 2023
  * 
  */
-#include "device_config.h"
 
+#include "mcu_config.h"
 
 // PIC18F4620 Configuration Bit Settings
-
 // 'C' source line config statements
 
 // CONFIG1H
@@ -72,4 +71,3 @@
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
-

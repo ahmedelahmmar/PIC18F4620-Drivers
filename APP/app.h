@@ -8,3 +8,14 @@
  * @copyright Copyright (c) 2023
  * 
  */
+
+#ifndef _APP_H_
+#define _APP_H_
+
+#include "../lib/compiler.h"
+#include "../lib/stdtypes.h"
+#include "../MCAL/MCAL_stdtypes.h"
+
+
+
+#endif /* _APP_H_ */

@@ -12,11 +12,9 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
-#include "../../../../../Program Files/Microchip/xc8/v2.41/pic/include/proc/pic18f4620.h"
-#include "../MCAL_stdtypes.h"
-#include "../device_config.h"
+#include <../proc/pic18f4620.h>
 
-
-
+#include "../../lib/stdtypes.h"
+#include "../../lib/bitmasking.h"
 
 #endif /* _GPIO_H_ */
