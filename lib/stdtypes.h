@@ -13,24 +13,36 @@
 #define NULL					((void*)0)
 #endif /* NULL */
 
-typedef unsigned char           uint8_t;
-typedef signed char             sint8_t;
+#define E_OK                    0x00u
+#define E_NOT_OK                0x01u
 
-typedef unsigned short          uint16_t;
-typedef signed short            sint16_t;
+#define STD_IDLE                0x00u
+#define STD_ACTIVE              0x01u
 
-typedef unsigned long           uint32_t;
-typedef signed long             sint32_t;
+#define STD_OFF                 0x00u
+#define STD_ON                  0x01u
 
-typedef unsigned long long      uint64_t;
-typedef signed long long        sint64_t;
+#define STD_LOW                 0x00u
+#define STD_HIGH                0x01u
 
-typedef float                   f32_t;
+typedef unsigned char           uint8;
+typedef signed char             sint8;
 
-typedef double                  f64_t;
+typedef unsigned short          uint16;
+typedef signed short            sint16;
 
-typedef long double             f128_t;
+typedef unsigned long           uint32;
+typedef signed long             sint32;
 
-typedef enum {RET_OK, RET_NOK}  stdret_t;
+typedef unsigned long long      uint64;
+typedef signed long long        sint64;
+
+typedef float                   float32;
+
+typedef double                  float64;
+
+typedef long double             float128;
+
+typedef uint8                   Std_ReturnType;
 
 #endif /* _STD_TYPES_H_ */

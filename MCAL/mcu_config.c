@@ -9,8 +9,6 @@
  * 
  */
 
-#include "mcu_config.h"
-
 // PIC18F4620 Configuration Bit Settings
 // 'C' source line config statements
 

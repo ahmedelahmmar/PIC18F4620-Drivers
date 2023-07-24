@@ -14,8 +14,7 @@
 
 #include "../lib/compiler.h"
 #include "../lib/stdtypes.h"
-#include "../MCAL/MCAL_stdtypes.h"
 
-
+#define _XTAL_FREQ          16000000UL
 
 #endif /* _APP_H_ */
