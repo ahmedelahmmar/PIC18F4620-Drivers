@@ -21,7 +21,6 @@
 #ifndef _GPIO_H_
 #define _GPIO_H_
 
-#include <../proc/pic18f4620.h>
 
 #include "GPIO_Config.h"
 #include "GPIO_Private.h"
@@ -30,6 +29,8 @@
 #include "../../lib/compiler.h"
 #include "../../lib/stdtypes.h"
 #include "../../lib/bitmasking.h"
+
+#include <../proc/pic18f4620.h>
 
 typedef enum {GPIO_LOW, GPIO_HIGH}                                                                      logic_t;
 typedef enum {GPIO_OUTPUT, GPIO_INPUT}                                                                  direction_t;

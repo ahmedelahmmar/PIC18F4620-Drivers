@@ -1,7 +1,6 @@
 /**
  * @file GPIO_Private.h
- * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @brief 
+ * @author Ahmed Alaa (4hmedalaa@gmail.com) 
  * @version 0.1
  * @date 2023-07-24
  * 

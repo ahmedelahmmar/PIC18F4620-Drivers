@@ -12,9 +12,8 @@
 #ifndef _APP_H_
 #define _APP_H_
 
-#include "../lib/compiler.h"
-#include "../lib/stdtypes.h"
-
 #define _XTAL_FREQ          16000000UL
+
+#include "../MCAL/GPIO/GPIO.h"
 
 #endif /* _APP_H_ */

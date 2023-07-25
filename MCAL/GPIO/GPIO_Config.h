@@ -1,7 +1,6 @@
 /**
  * @file GPIO_Config.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @brief 
  * @version 0.1
  * @date 2023-07-24
  * 
@@ -26,7 +25,7 @@
  *     - STD_ON: Include GPIO port interfaces in the build.
  *     - STD_OFF: Exclude GPIO port interfaces from the build.
  */
-#define GPIO_PORT_INTERFACES        STD_OFF
+#define GPIO_PORT_INTERFACES        STD_ON
 
 #endif	/* _GPIO_CONFIG_H_ */
 
