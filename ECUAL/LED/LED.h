@@ -21,6 +21,8 @@
 #ifndef _LED_H_
 #define	_LED_H_
 
+#include "LED_Config.h"
+
 #include "../../MCAL/GPIO/GPIO.h"
 
 typedef struct

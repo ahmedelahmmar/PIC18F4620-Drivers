@@ -8,6 +8,7 @@
  * 
  */
 
+#include "GPIO_Private.h"
 #include "GPIO.h"
 
 static volatile uint8 * const TRIS[NUMBER_OF_PORTS] = {&TRISA, &TRISB, &TRISC, &TRISD, &TRISE};

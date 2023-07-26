@@ -23,7 +23,6 @@
 
 
 #include "GPIO_Config.h"
-#include "GPIO_Private.h"
 
 #include "../mcu_config.h"
 #include "../../lib/compiler.h"

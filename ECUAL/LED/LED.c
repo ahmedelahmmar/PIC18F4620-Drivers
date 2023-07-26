@@ -8,6 +8,7 @@
  * 
  */
 
+#include "LED_Private.h"
 #include "LED.h"
 
 Std_ReturnType LED_Init(const led_t * loc_led)
@@ -46,7 +47,18 @@ Std_ReturnType LED_TurnOn(const led_t * loc_led)
             .direction = GPIO_OUTPUT
         };
         
+        #if (LED_CONNECTION_CONFIGURATION == LED_ACTIVE_LOW)
+
+        loc_ret = GPIO_WriteChannelLogic(&loc_ledChannel, GPIO_LOW);
+        
+        #elif (LED_CONNECTION_CONFIGURATION == LED_ACTIVE_HIGH)
+
         loc_ret = GPIO_WriteChannelLogic(&loc_ledChannel, GPIO_HIGH);
+        
+        #else
+        #warning "'LED_CONNECTION_CONFIGURATION' macro is not configured in LED_Config.h"
+        #endif
+        
     }
     else
     {
@@ -69,7 +81,17 @@ Std_ReturnType LED_TurnOff(const led_t * loc_led)
             .direction = GPIO_OUTPUT
         };
         
+        #if (LED_CONNECTION_CONFIGURATION == LED_ACTIVE_LOW)
+
+        loc_ret = GPIO_WriteChannelLogic(&loc_ledChannel, GPIO_HIGH);
+        
+        #elif (LED_CONNECTION_CONFIGURATION == LED_ACTIVE_HIGH)
+
         loc_ret = GPIO_WriteChannelLogic(&loc_ledChannel, GPIO_LOW);
+        
+        #else
+        #warning "'LED_CONNECTION_CONFIGURATION' macro is not configured in LED_Config.h"
+        #endif
     }
     else
     {
