@@ -43,7 +43,7 @@ typedef struct
     uint8 direction : 1;
     uint8 logic     : 1;
     
-} channelConfig_t;
+} GPIO_Channel_t;
 
 /** 
  * @brief Initializes a GPIO channel with the provided configuration.
@@ -61,7 +61,7 @@ typedef struct
  * @note If the direction of the channel is set to GPIO_OUTPUT, the logic level will be set
  *       based on the value specified in the configuration.
  */
-Std_ReturnType GPIO_InitChannel(const channelConfig_t * loc_channel);
+Std_ReturnType GPIO_InitChannel(const GPIO_Channel_t * const loc_channel);
 
 /** 
  * @brief Sets the direction of a GPIO channel based on the provided configuration.
@@ -78,7 +78,7 @@ Std_ReturnType GPIO_InitChannel(const channelConfig_t * loc_channel);
  * @note The port and pin values within the configuration must be within valid ranges.
  * @note Call this function before using the GPIO channel as an input or output.
  */
-Std_ReturnType GPIO_WriteChannelDirection(const channelConfig_t * loc_channel, const direction_t loc_direction);
+Std_ReturnType GPIO_SetChannelDirection(GPIO_Channel_t * const loc_channel, const direction_t loc_direction);
 
 /** 
  * @brief Sets the logic level of a GPIO channel based on the provided configuration.
@@ -95,7 +95,7 @@ Std_ReturnType GPIO_WriteChannelDirection(const channelConfig_t * loc_channel, c
  * @note The port and pin values within the configuration must be within valid ranges.
  * @note This function should be called only if the channel's direction is set to GPIO_OUTPUT.
  */
-Std_ReturnType GPIO_WriteChannelLogic(const channelConfig_t * loc_channel, const logic_t loc_logic);
+Std_ReturnType GPIO_SetChannelLogic(GPIO_Channel_t * const loc_channel, const logic_t loc_logic);
 
 /** 
  * @brief Toggles the logic level of a GPIO channel based on the provided configuration.
@@ -111,7 +111,7 @@ Std_ReturnType GPIO_WriteChannelLogic(const channelConfig_t * loc_channel, const
  * @note The port and pin values within the configuration must be within valid ranges.
  * @note This function should be called only if the channel's direction is set to GPIO_OUTPUT.
  */
-Std_ReturnType GPIO_ToggleChannelLogic(const channelConfig_t * loc_channel);
+Std_ReturnType GPIO_ToggleChannelLogic(GPIO_Channel_t * const loc_channel);
 
 /** 
  * @brief Reads the direction of a GPIO channel based on the provided configuration.
@@ -129,7 +129,7 @@ Std_ReturnType GPIO_ToggleChannelLogic(const channelConfig_t * loc_channel);
  * @note The function updates the `direction` member in the channel configuration structure
  *       with the current direction read from the hardware register.
  */
-Std_ReturnType GPIO_ReadChannelDirection(channelConfig_t * loc_channel);
+Std_ReturnType GPIO_GetChannelDirection(GPIO_Channel_t * const loc_channel);
 
 /** 
  * @brief Reads the logic level of a GPIO channel based on the provided configuration.
@@ -147,7 +147,7 @@ Std_ReturnType GPIO_ReadChannelDirection(channelConfig_t * loc_channel);
  * @note The function updates the `logic` member in the channel configuration structure
  *       with the current logic level read from the hardware register.
  */
-Std_ReturnType GPIO_ReadChannelLogic(channelConfig_t * loc_channel);
+Std_ReturnType GPIO_GetChannelLogic(GPIO_Channel_t * const loc_channel);
 
 /** 
  * @brief Sets the direction of a GPIO port based on the provided configuration.
@@ -171,7 +171,7 @@ Std_ReturnType GPIO_ReadChannelLogic(channelConfig_t * loc_channel);
  * @note This function should be called before using any of the GPIO pins in the specified port.
  * @note The function directly modifies the TRIS (Tri-State) register to configure the port's direction.
  */
-Std_ReturnType GPIO_WritePortDirection(const port_t loc_port, const uint8 loc_direction_mask);
+Std_ReturnType GPIO_SetPortDirection(const port_t loc_port, const uint8 loc_direction_mask);
 
 /** 
  * @brief Sets the logic level of a GPIO port based on the provided configuration.
@@ -195,7 +195,7 @@ Std_ReturnType GPIO_WritePortDirection(const port_t loc_port, const uint8 loc_di
  * @note This function should be called after configuring the port's direction appropriately.
  * @note The function directly modifies the LAT (Latch) register to set the port's logic level.
  */
-Std_ReturnType GPIO_WritePortLogic(const port_t loc_port, const uint8 loc_logic_mask);
+Std_ReturnType GPIO_SetPortLogic(const port_t loc_port, const uint8 loc_logic_mask);
 
 /** 
  * @brief Toggles the logic level of a GPIO port based on the provided configuration.
@@ -237,7 +237,7 @@ Std_ReturnType GPIO_TogglePortLogic(const port_t loc_port);
  * @note This function can be used to determine the direction of all the pins in the specified port.
  * @note If an invalid @param loc_port or @param loc_direction_ret is provided, the function will return E_NOT_OK.
  */
-Std_ReturnType GPIO_ReadPortDirection(const port_t loc_port, uint8 * const loc_direction_ret);
+Std_ReturnType GPIO_GetPortDirection(const port_t loc_port, uint8 * const loc_direction_ret);
 
 /** 
  * @brief Reads the logic levels of a GPIO port based on the provided configuration.
@@ -260,6 +260,6 @@ Std_ReturnType GPIO_ReadPortDirection(const port_t loc_port, uint8 * const loc_d
  * @note This function can be used to determine the logic level of all the pins in the specified port.
  * @note If an invalid @param loc_port or @param loc_logic_ret is provided, the function will return E_NOT_OK.
  */
-Std_ReturnType GPIO_ReadPortLogic(const port_t loc_port, uint8 * const loc_logic_ret);
+Std_ReturnType GPIO_GetPortLogic(const port_t loc_port, uint8 * const loc_logic_ret);
 
 #endif /* _GPIO_H_ */ 

@@ -16,4 +16,7 @@
 
 #include "../MCAL/GPIO/GPIO.h"
 
+#include "../ECUAL/LED/LED.h"
+#include "../ECUAL/PushButton/PushButton.h"
+
 #endif /* _APP_H_ */

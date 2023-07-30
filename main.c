@@ -10,22 +10,12 @@
 
 #include "APP/app.h"
 
-channelConfig_t LED1 = {
-  .pin = GPIO_PIN0,
-  .port = GPIO_PORTC,
-  .direction = GPIO_OUTPUT,
-  .logic = GPIO_LOW 
-};
 
 int main(void)
 {  
-    GPIO_WritePortDirection(GPIO_PORTC, GPIO_OUTPUT);
-    GPIO_WritePortLogic(GPIO_PORTC, 0x55);
-    
     while(TRUE)
     {
-        __delay_ms(1000);
-        GPIO_TogglePortLogic(GPIO_PORTC);
+        
     }
     
     return 0;

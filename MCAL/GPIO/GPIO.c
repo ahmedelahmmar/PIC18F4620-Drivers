@@ -16,17 +16,17 @@ static volatile uint8 * const PORT[NUMBER_OF_PORTS] = {&PORTA, &PORTB, &PORTC, &
 static volatile uint8 * const LAT[NUMBER_OF_PORTS]  = {&LATA,  &LATB,  &LATC,  &LATD,  &LATE };
 
 #if (GPIO_CHANNEL_INTERFACES == STD_ON)
-Std_ReturnType GPIO_InitChannel(const channelConfig_t * loc_channel)
+Std_ReturnType GPIO_InitChannel(const GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
     if (NULL != loc_channel)
     {
-        loc_ret |= GPIO_WriteChannelDirection(loc_channel, loc_channel->direction);
+        loc_ret |= GPIO_SetChannelDirection(loc_channel, loc_channel->direction);
         
         if (loc_channel->direction == GPIO_OUTPUT)
         {
-            loc_ret |= GPIO_WriteChannelLogic(loc_channel, loc_channel->logic);
+            loc_ret |= GPIO_SetChannelLogic(loc_channel, loc_channel->logic);
         }
     }
     else
@@ -37,7 +37,7 @@ Std_ReturnType GPIO_InitChannel(const channelConfig_t * loc_channel)
     return loc_ret;
 }
 
-Std_ReturnType GPIO_WriteChannelDirection(const channelConfig_t * loc_channel, const direction_t loc_direction)
+Std_ReturnType GPIO_SetChannelDirection(GPIO_Channel_t * const loc_channel, const direction_t loc_direction)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -64,7 +64,7 @@ Std_ReturnType GPIO_WriteChannelDirection(const channelConfig_t * loc_channel, c
     return loc_ret;
 }
 
-Std_ReturnType GPIO_WriteChannelLogic(const channelConfig_t * loc_channel, const logic_t loc_logic)
+Std_ReturnType GPIO_SetChannelLogic(GPIO_Channel_t * const loc_channel, const logic_t loc_logic)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -91,7 +91,7 @@ Std_ReturnType GPIO_WriteChannelLogic(const channelConfig_t * loc_channel, const
     return loc_ret;
 }
 
-Std_ReturnType GPIO_ToggleChannelLogic(const channelConfig_t * loc_channel)
+Std_ReturnType GPIO_ToggleChannelLogic(GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -107,7 +107,7 @@ Std_ReturnType GPIO_ToggleChannelLogic(const channelConfig_t * loc_channel)
     return loc_ret;
 }
 
-Std_ReturnType GPIO_ReadChannelDirection(channelConfig_t * loc_channel)
+Std_ReturnType GPIO_GetChannelDirection(GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -123,7 +123,7 @@ Std_ReturnType GPIO_ReadChannelDirection(channelConfig_t * loc_channel)
     return loc_ret;   
 }
 
-Std_ReturnType GPIO_ReadChannelLogic(channelConfig_t * loc_channel)
+Std_ReturnType GPIO_GetChannelLogic(GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -141,7 +141,7 @@ Std_ReturnType GPIO_ReadChannelLogic(channelConfig_t * loc_channel)
 #endif
 
 #if (GPIO_PORT_INTERFACES == STD_ON)
-Std_ReturnType GPIO_WritePortDirection(const port_t loc_port, const uint8 loc_direction_mask)
+Std_ReturnType GPIO_SetPortDirection(const port_t loc_port, const uint8 loc_direction_mask)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -157,7 +157,7 @@ Std_ReturnType GPIO_WritePortDirection(const port_t loc_port, const uint8 loc_di
     return loc_ret;
 }
 
-Std_ReturnType GPIO_WritePortLogic(const port_t loc_port, const uint8 loc_logic_mask)
+Std_ReturnType GPIO_SetPortLogic(const port_t loc_port, const uint8 loc_logic_mask)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -189,7 +189,7 @@ Std_ReturnType GPIO_TogglePortLogic(const port_t loc_port)
     return loc_ret;
 }
 
-Std_ReturnType GPIO_ReadPortDirection(const port_t loc_port, uint8 * const loc_direction_ret)
+Std_ReturnType GPIO_GetPortDirection(const port_t loc_port, uint8 * const loc_direction_ret)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -205,7 +205,7 @@ Std_ReturnType GPIO_ReadPortDirection(const port_t loc_port, uint8 * const loc_d
     return loc_ret;   
 }
 
-Std_ReturnType GPIO_ReadPortLogic(const port_t loc_port, uint8 * const loc_logic_ret)
+Std_ReturnType GPIO_GetPortLogic(const port_t loc_port, uint8 * const loc_logic_ret)
 {
     Std_ReturnType loc_ret = E_OK;
     
