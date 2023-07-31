@@ -11,7 +11,7 @@
  * @note Include this header in your application code to utilize the GPIO functionality.
  * @note The file is thoroughly documented, providing clear explanations for each function's purpose,
  *       parameters, return values, and usage examples.
- * @version 0.1
+ * @version 0.3
  * @date 2023-07-22
  * 
  * @copyright Copyright (c) 2023
@@ -26,7 +26,7 @@
 
 #include "../mcu_config.h"
 #include "../../lib/compiler.h"
-#include "../../lib/stdtypes.h"
+#include "../../lib/Std_Types.h"
 #include "../../lib/bitmasking.h"
 
 #include <../proc/pic18f4620.h>
@@ -78,7 +78,7 @@ Std_ReturnType GPIO_InitChannel(const GPIO_Channel_t * const loc_channel);
  * @note The port and pin values within the configuration must be within valid ranges.
  * @note Call this function before using the GPIO channel as an input or output.
  */
-Std_ReturnType GPIO_SetChannelDirection(GPIO_Channel_t * const loc_channel, const direction_t loc_direction);
+Std_ReturnType GPIO_SetChannelDirection(const GPIO_Channel_t * const loc_channel, const direction_t loc_direction);
 
 /** 
  * @brief Sets the logic level of a GPIO channel based on the provided configuration.
@@ -95,7 +95,7 @@ Std_ReturnType GPIO_SetChannelDirection(GPIO_Channel_t * const loc_channel, cons
  * @note The port and pin values within the configuration must be within valid ranges.
  * @note This function should be called only if the channel's direction is set to GPIO_OUTPUT.
  */
-Std_ReturnType GPIO_SetChannelLogic(GPIO_Channel_t * const loc_channel, const logic_t loc_logic);
+Std_ReturnType GPIO_SetChannelLogic(const GPIO_Channel_t * const loc_channel, const logic_t loc_logic);
 
 /** 
  * @brief Toggles the logic level of a GPIO channel based on the provided configuration.
@@ -111,7 +111,7 @@ Std_ReturnType GPIO_SetChannelLogic(GPIO_Channel_t * const loc_channel, const lo
  * @note The port and pin values within the configuration must be within valid ranges.
  * @note This function should be called only if the channel's direction is set to GPIO_OUTPUT.
  */
-Std_ReturnType GPIO_ToggleChannelLogic(GPIO_Channel_t * const loc_channel);
+Std_ReturnType GPIO_ToggleChannelLogic(const GPIO_Channel_t * const loc_channel);
 
 /** 
  * @brief Reads the direction of a GPIO channel based on the provided configuration.
@@ -129,7 +129,30 @@ Std_ReturnType GPIO_ToggleChannelLogic(GPIO_Channel_t * const loc_channel);
  * @note The function updates the `direction` member in the channel configuration structure
  *       with the current direction read from the hardware register.
  */
-Std_ReturnType GPIO_GetChannelDirection(GPIO_Channel_t * const loc_channel);
+Std_ReturnType GPIO_RefreshChannelDirection(GPIO_Channel_t * const loc_channel);
+
+/**
+ * @brief Retrieves the direction of a GPIO channel based on the provided configuration.
+ *
+ * This function retrieves the direction of a GPIO channel specified by the @param loc_channel parameter 
+ * and stores the result in the memory location pointed to by the @param loc_direction_ret parameter.
+ * The function reads the corresponding TRIS (Tri-State) register for the specified channel to 
+ * determine the direction of the individual pin and returns the result as a @c direction_t value.
+ *
+ * @param loc_channel Pointer to the GPIO channel configuration structure.
+ * @param loc_direction_ret Pointer to a @c direction_t variable where the channel direction 
+ *        will be stored after the function call.
+ * @return Std_ReturnType Error status indicating the success of reading the channel direction.
+ *     - E_OK: The channel direction was read successfully.
+ *     - E_NOT_OK: An error occurred during the process (e.g., invalid @param loc_channel or @param loc_direction_ret).
+ *
+ * @note The function expects a valid @param loc_channel parameter pointing to a valid GPIO channel configuration structure.
+ * @note The @param loc_direction_ret should point to a valid @c direction_t variable where the 
+ *       channel direction value will be stored.
+ * @note This function can be used to determine the direction of the individual pin in the specified channel.
+ * @note If an invalid @param loc_channel or @param loc_direction_ret is provided, the function will return E_NOT_OK.
+ */
+Std_ReturnType GPIO_GetChannelDirection(const GPIO_Channel_t * const loc_channel, direction_t * const loc_direction_ret);
 
 /** 
  * @brief Reads the logic level of a GPIO channel based on the provided configuration.
@@ -147,7 +170,30 @@ Std_ReturnType GPIO_GetChannelDirection(GPIO_Channel_t * const loc_channel);
  * @note The function updates the `logic` member in the channel configuration structure
  *       with the current logic level read from the hardware register.
  */
-Std_ReturnType GPIO_GetChannelLogic(GPIO_Channel_t * const loc_channel);
+Std_ReturnType GPIO_RefreshChannelLogic(GPIO_Channel_t * const loc_channel);
+
+/**
+ * @brief Retrieves the logic level of a GPIO channel based on the provided configuration.
+ *
+ * This function retrieves the logic level of a GPIO channel specified by the @param loc_channel parameter 
+ * and stores the result in the memory location pointed to by the @param loc_logic_ret parameter.
+ * The function reads the corresponding PORT (Latch) register for the specified channel to 
+ * determine the logic level of the individual pin and returns the result as a @c logic_t value.
+ *
+ * @param loc_channel Pointer to the GPIO channel configuration structure.
+ * @param loc_logic_ret Pointer to a @c logic_t variable where the channel logic level 
+ *        will be stored after the function call.
+ * @return Std_ReturnType Error status indicating the success of reading the channel logic level.
+ *     - E_OK: The channel logic level was read successfully.
+ *     - E_NOT_OK: An error occurred during the process (e.g., invalid @param loc_channel or @param loc_logic_ret).
+ *
+ * @note The function expects a valid @param loc_channel parameter pointing to a valid GPIO channel configuration structure.
+ * @note The @param loc_logic_ret should point to a valid @c logic_t variable where the 
+ *       channel logic level value will be stored.
+ * @note This function can be used to determine the logic level of the individual pin in the specified channel.
+ * @note If an invalid @param loc_channel or @param loc_logic_ret is provided, the function will return E_NOT_OK.
+ */
+Std_ReturnType GPIO_GetChannelLogic(const GPIO_Channel_t * const loc_channel, logic_t * const loc_logic_ret);
 
 /** 
  * @brief Sets the direction of a GPIO port based on the provided configuration.

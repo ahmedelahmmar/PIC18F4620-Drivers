@@ -1,7 +1,7 @@
 /**
  * @file GPIO.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @version 0.1
+ * @version 0.3
  * @date 2023-07-22
  * 
  * @copyright Copyright (c) 2023
@@ -37,7 +37,7 @@ Std_ReturnType GPIO_InitChannel(const GPIO_Channel_t * const loc_channel)
     return loc_ret;
 }
 
-Std_ReturnType GPIO_SetChannelDirection(GPIO_Channel_t * const loc_channel, const direction_t loc_direction)
+Std_ReturnType GPIO_SetChannelDirection(const GPIO_Channel_t * const loc_channel, const direction_t loc_direction)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -64,7 +64,7 @@ Std_ReturnType GPIO_SetChannelDirection(GPIO_Channel_t * const loc_channel, cons
     return loc_ret;
 }
 
-Std_ReturnType GPIO_SetChannelLogic(GPIO_Channel_t * const loc_channel, const logic_t loc_logic)
+Std_ReturnType GPIO_SetChannelLogic(const GPIO_Channel_t * const loc_channel, const logic_t loc_logic)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -91,7 +91,7 @@ Std_ReturnType GPIO_SetChannelLogic(GPIO_Channel_t * const loc_channel, const lo
     return loc_ret;
 }
 
-Std_ReturnType GPIO_ToggleChannelLogic(GPIO_Channel_t * const loc_channel)
+Std_ReturnType GPIO_ToggleChannelLogic(const GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -107,7 +107,7 @@ Std_ReturnType GPIO_ToggleChannelLogic(GPIO_Channel_t * const loc_channel)
     return loc_ret;
 }
 
-Std_ReturnType GPIO_GetChannelDirection(GPIO_Channel_t * const loc_channel)
+Std_ReturnType GPIO_RefreshChannelDirection(GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -123,13 +123,45 @@ Std_ReturnType GPIO_GetChannelDirection(GPIO_Channel_t * const loc_channel)
     return loc_ret;   
 }
 
-Std_ReturnType GPIO_GetChannelLogic(GPIO_Channel_t * const loc_channel)
+Std_ReturnType GPIO_GetChannelDirection(const GPIO_Channel_t * const loc_channel, direction_t * const loc_direction_ret)
+{
+    Std_ReturnType loc_ret = E_OK;
+    
+    if ((NULL != loc_channel) && (NULL != loc_direction_ret) && (loc_channel->port < NUMBER_OF_PORTS) && (loc_channel->pin < NUMBER_OF_PINS_PER_PORT))
+    {
+        *loc_direction_ret = GET_BIT(loc_channel->pin, *TRIS[loc_channel->port]);
+    }
+    else
+    {
+        loc_ret = E_NOT_OK;
+    }
+    
+    return loc_ret;    
+}
+
+Std_ReturnType GPIO_RefreshChannelLogic(GPIO_Channel_t * const loc_channel)
 {
     Std_ReturnType loc_ret = E_OK;
     
     if ((NULL != loc_channel) && (loc_channel->port < NUMBER_OF_PORTS) && (loc_channel->pin < NUMBER_OF_PINS_PER_PORT))
     {
         loc_channel->logic = GET_BIT(loc_channel->pin, *PORT[loc_channel->port]);
+    }
+    else
+    {
+        loc_ret = E_NOT_OK;
+    }
+    
+    return loc_ret;  
+}
+
+Std_ReturnType GPIO_GetChannelLogic(const GPIO_Channel_t * const loc_channel, logic_t * const loc_logic_ret)
+{
+    Std_ReturnType loc_ret = E_OK;
+    
+    if ((NULL != loc_channel) && (NULL != loc_logic_ret) && (loc_channel->port < NUMBER_OF_PORTS) && (loc_channel->pin < NUMBER_OF_PINS_PER_PORT))
+    {
+        *loc_logic_ret = GET_BIT(loc_channel->pin, *PORT[loc_channel->port]);
     }
     else
     {
