@@ -12,7 +12,7 @@
  *       parameters, return values, and usage examples.
  * @note The LED interface is designed to be portable and can be used with different microcontroller
  *       families and development environments.
- * @version 0.1
+ * @version 0.2
  * @date 2023-07-25
  * 
  * @copyright Copyright (c) 2023
@@ -21,18 +21,29 @@
 #ifndef _LED_H_
 #define	_LED_H_
 
-#include "LED_Config.h"
-
 #include "../../MCAL/GPIO/GPIO.h"
+
+typedef enum
+{
+    LED_OFF = 0,
+    LED_ON
+            
+} LED_StatusTypeDef;
+
+typedef enum 
+{
+    LED_ACTIVE_LOW = 0,
+    LED_ACTIVE_HIGH
+            
+} LED_ConfigTypeDef;
 
 typedef struct
 {
-    uint8 pin       : 3;
-    uint8 port      : 3;
-    uint8 logic     : 1;
-    uint8 reserved  : 1;
+    GPIO_InitTypeDef Channel;
+    LED_StatusTypeDef Status;
+    LED_ConfigTypeDef Configuration;
     
-} led_t;
+} LED_InitTypeDef;
 
 /**
  * @brief Initializes a LED based on the provided configuration.
@@ -48,10 +59,9 @@ typedef struct
  * @note The function expects a valid @param loc_led parameter pointing to a valid LED configuration structure.
  * @note The LED configuration structure should contain the GPIO channel information required to control the LED.
  * @note This function must be called before using the LED for any operations.
- * @note The function internally configures the GPIO channel as an output to control the LED.
  * @note If an invalid @param loc_led or configuration is provided, the function will return E_NOT_OK.
  */
-Std_ReturnType LED_Init(const led_t * loc_led);
+Std_ReturnType LED_Init(const LED_InitTypeDef * const loc_led);
 
 /**
  * @brief Turns on a LED based on the provided configuration.
@@ -70,7 +80,7 @@ Std_ReturnType LED_Init(const led_t * loc_led);
  * @note The function sets the logic level of the GPIO channel to turn on the LED.
  * @note If an invalid @param loc_led or configuration is provided, the function will return E_NOT_OK.
  */
-Std_ReturnType LED_TurnOn(const led_t * loc_led);
+Std_ReturnType LED_TurnOn(const LED_InitTypeDef * const loc_led);
 
 /**
  * @brief Turns off a LED based on the provided configuration.
@@ -89,7 +99,7 @@ Std_ReturnType LED_TurnOn(const led_t * loc_led);
  * @note The function sets the logic level of the GPIO channel to turn off the LED.
  * @note If an invalid @param loc_led or configuration is provided, the function will return E_NOT_OK.
  */
-Std_ReturnType LED_TurnOff(const led_t * loc_led);
+Std_ReturnType LED_TurnOff(const LED_InitTypeDef * const loc_led);
 
 /**
  * @brief Toggles the state of a LED based on the provided configuration.
@@ -108,7 +118,47 @@ Std_ReturnType LED_TurnOff(const led_t * loc_led);
  * @note The function reads the current logic level of the GPIO channel to determine the LED state and toggles it.
  * @note If an invalid @param loc_led or configuration is provided, the function will return E_NOT_OK.
  */
-Std_ReturnType LED_Toggle(const led_t * loc_led);
+Std_ReturnType LED_Toggle(const LED_InitTypeDef * const loc_led);
+
+/**
+ * @brief Refreshes the status of an LED based on the provided configuration.
+ *
+ * This function refreshes the status of an LED specified by the @param loc_led parameter.
+ * It updates the LED's state based on any changes that might have occurred since its initialization.
+ *
+ * @param loc_led Pointer to the LED configuration structure.
+ * @return Std_ReturnType Error status indicating the success of refreshing the LED status.
+ *     - E_OK: The LED status was refreshed successfully.
+ *     - E_NOT_OK: An error occurred during the process (e.g., invalid @param loc_led or configuration).
+ *
+ * @note The function expects a valid @param loc_led parameter pointing to a valid LED configuration structure.
+ * @note The LED configuration structure should contain the necessary information to control the LED.
+ * @note This function should be used periodically to update the LED status if it is controlled externally.
+ * @note If an invalid @param loc_led or configuration is provided, the function will return E_NOT_OK.
+ */
+Std_ReturnType LED_RefreshStatus(LED_InitTypeDef * const loc_led);
+
+/**
+ * @brief Retrieves the current status of an LED based on the provided configuration.
+ *
+ * This function retrieves the current status of an LED specified by the @param loc_led parameter
+ * and stores the result in the memory location pointed to by the @param loc_status_ret parameter.
+ * The function reads the actual status of the LED, which may differ from the last known state
+ * stored in the LED configuration.
+ *
+ * @param loc_led Pointer to the LED configuration structure.
+ * @param loc_status_ret Pointer to an LED_StatusTypeDef variable where the LED status 
+ *        will be stored after the function call.
+ * @return Std_ReturnType Error status indicating the success of reading the LED status.
+ *     - E_OK: The LED status was retrieved successfully.
+ *     - E_NOT_OK: An error occurred during the process (e.g., invalid @param loc_led or @param loc_status_ret).
+ *
+ * @note The function expects a valid @param loc_led parameter pointing to a valid LED configuration structure.
+ * @note The @param loc_status_ret should point to a valid LED_StatusTypeDef variable where the 
+ *       LED status value will be stored.
+ * @note This function can be used to read the real-time status of the LED, which may have changed since initialization.
+ * @note If an invalid @param loc_led or @param loc_status_ret is provided, the function will return E_NOT_OK.
+ */
+Std_ReturnType LED_GetStatus(const LED_InitTypeDef * const loc_led, LED_StatusTypeDef * const loc_status_ret);
 
 #endif	/* _LED_H_ */
-
