@@ -11,7 +11,11 @@
 #ifndef _GPIO_PRIVATE_H_
 #define	_GPIO_PRIVATE_H_
 
-#define PORT_MASK       0xFF
+#include "../../lib/compiler.h"
+#include "../../lib/bitmasking.h"
+#include <../proc/pic18f4620.h>
+
+#define GPIO_ALL_PINS       0xFF
 
 #endif	/* _GPIO_PRIVATE_H_ */
 

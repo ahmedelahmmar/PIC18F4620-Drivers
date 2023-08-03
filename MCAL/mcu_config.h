@@ -13,6 +13,7 @@
 
 #define NUMBER_OF_PORTS             5
 #define NUMBER_OF_PINS_PER_PORT     8
+#define NUMBER_OF_INTx_PINS         3
 
 #define DELAY_MS(x)               __delay_ms(x)
 #define DELAY_US(x)               __delay_us(x)
