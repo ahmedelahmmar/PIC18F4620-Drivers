@@ -22,7 +22,7 @@ Std_ReturnType GPIO_InitChannel(const GPIO_InitTypeDef * const loc_channel)
     
     if (NULL != loc_channel)
     {
-        loc_ret |= GPIO_SetChannelDirection(loc_channel, loc_channel->Direction);
+        loc_ret = GPIO_SetChannelDirection(loc_channel, loc_channel->Direction);
         
         if (loc_channel->Direction == GPIO_OUTPUT)
         {
@@ -35,6 +35,23 @@ Std_ReturnType GPIO_InitChannel(const GPIO_InitTypeDef * const loc_channel)
     }
     
     return loc_ret;
+}
+
+Std_ReturnType GPIO_DeInitChannel(const GPIO_InitTypeDef * const loc_channel)
+{
+    Std_ReturnType loc_ret = E_OK;
+    
+    if (NULL != loc_channel)
+    {
+        loc_ret = GPIO_SetChannelDirection(loc_channel, GPIO_OUTPUT);
+        loc_ret |= GPIO_SetChannelLogic(loc_channel, GPIO_LOW);
+    }
+    else
+    {
+        loc_ret = E_NOT_OK;
+    }
+    
+    return loc_ret;   
 }
 
 Std_ReturnType GPIO_SetChannelDirection(const GPIO_InitTypeDef * const loc_channel, const GPIO_DirectionTypeDef loc_direction)

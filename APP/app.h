@@ -15,7 +15,9 @@
 #define _XTAL_FREQ          16000000UL
 
 #include "../MCAL/GPIO/GPIO.h"
+#include "../MCAL/Interrupts/Interrupts.h"
 
 #include "../ECUAL/LED/LED.h"
+#include "../ECUAL/PushButton/PushButton.h"
 
 #endif /* _APP_H_ */

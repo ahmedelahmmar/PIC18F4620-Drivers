@@ -59,6 +59,25 @@ typedef struct
  */
 Std_ReturnType GPIO_InitChannel(const GPIO_InitTypeDef * const loc_channel);
 
+/**
+ * @brief Deinitializes a GPIO channel based on the provided configuration.
+ *
+ * This function deinitializes a GPIO channel specified by the @param loc_channel parameter.
+ * It resets the channel to its default state, disabling any previous configurations.
+ *
+ * @param loc_channel Pointer to the GPIO channel configuration structure.
+ * @return Std_ReturnType Error status indicating the success of deinitializing the channel.
+ *     - E_OK: The GPIO channel was deinitialized successfully.
+ *     - E_NOT_OK: An error occurred during the process (e.g., invalid @param loc_channel or configuration).
+ *
+ * @note The function expects a valid @param loc_channel parameter pointing to a valid GPIO channel configuration structure.
+ * @note The GPIO channel configuration structure should contain the necessary information to identify the channel.
+ * @note This function should be called when the GPIO channel is no longer needed or during system shutdown.
+ * @note Deinitializing the GPIO channel will remove any previous configurations and set it to its default state.
+ * @note If an invalid @param loc_channel or configuration is provided, the function will return E_NOT_OK.
+ */
+Std_ReturnType GPIO_DeInitChannel(const GPIO_InitTypeDef * const loc_channel);
+
 /** 
  * @brief Sets the direction of a GPIO channel based on the provided configuration.
  *

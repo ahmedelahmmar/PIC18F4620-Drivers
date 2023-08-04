@@ -172,7 +172,7 @@ Std_ReturnType LED_GetStatus(const LED_InitTypeDef * const loc_led, LED_StatusTy
 {
     Std_ReturnType loc_ret = E_OK;
     
-    if (NULL != loc_led)
+    if ((NULL != loc_led) && (NULL != loc_status_ret))
     {   
         GPIO_LogicTypeDef loc_logic;
         loc_ret = GPIO_GetChannelLogic(&(loc_led->Channel), &loc_logic);
