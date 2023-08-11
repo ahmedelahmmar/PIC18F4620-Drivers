@@ -11,87 +11,117 @@
 
 #include "app.h"
 
-LED_InitTypeDef LED_RedLed = {
+LED_InitTypeDef LED1 = {
     .Channel.Pin = GPIO_PIN0,
     .Channel.Port = GPIO_PORTC,
     .Configuration = LED_ACTIVE_HIGH,
     .Status = LED_OFF
 };
 
-LED_InitTypeDef LED_BlueLed = {
-    .Channel.Pin = GPIO_PIN6,
+LED_InitTypeDef LED2 = {
+    .Channel.Pin = GPIO_PIN1,
     .Channel.Port = GPIO_PORTC,
-    .Configuration = LED_ACTIVE_LOW,
+    .Configuration = LED_ACTIVE_HIGH,
     .Status = LED_OFF
 };
 
-PUSHBUTTON_InitTypeDef PB_Top = {
-    .Channel.Pin = GPIO_PIN0,
-    .Channel.Port = GPIO_PORTB,
-    .Configuration = PUSHBUTTON_ACTIVE_HIGH
+LED_InitTypeDef LED3 = {
+    .Channel.Pin = GPIO_PIN2,
+    .Channel.Port = GPIO_PORTC,
+    .Configuration = LED_ACTIVE_HIGH,
+    .Status = LED_OFF
 };
 
-PUSHBUTTON_InitTypeDef PB_Bottom = {
-    .Channel.Pin = GPIO_PIN1,
-    .Channel.Port = GPIO_PORTB,
-    .Configuration = PUSHBUTTON_ACTIVE_LOW
+LED_InitTypeDef LED4 = {
+    .Channel.Pin = GPIO_PIN3,
+    .Channel.Port = GPIO_PORTC,
+    .Configuration = LED_ACTIVE_HIGH,
+    .Status = LED_OFF
 };
 
-void INT0_Routine(void)
+void RB4_RISR(void)
 {
-    LED_Toggle(&LED_RedLed);
+    LED_TurnOn(&LED1);
 }
 
-void INT1_Routine(void)
+void RB4_FISR(void)
 {
-    LED_Toggle(&LED_BlueLed);
+    LED_TurnOn(&LED2);
 }
 
-EXTI_INTxInitTypeDef Interrupt0 = {
-    .INTx = EXTI_INT0,
-    .Trigger = EXTI_RISING_EDGE,
-    .Priority = INTERRUPTS_HIGH_PRIORITY,
-    .InterruptHandler = INT0_Routine
+void RB5_RISR(void)
+{
+    LED_TurnOff(&LED1);
+}
+
+void RB5_FISR(void)
+{
+    LED_TurnOff(&LED2);
+}
+
+void RB6_RISR(void)
+{
+    LED_TurnOn(&LED3);
+}
+
+void RB6_FISR(void)
+{
+    LED_TurnOn(&LED4);
+}
+
+
+void RB7_RISR(void)
+{
+    LED_TurnOff(&LED3);   
+}
+
+void RB7_FISR(void)
+{
+    LED_TurnOff(&LED4);
+}
+
+
+EXTI_RBxInitTypeDef RB4obj = {
+    .RBx = EXTI_RB4,
+    .RisingEdgeInterruptHandler = RB4_RISR,
+    .FallingEdgeInterruptHandler = RB4_FISR
 };
 
-EXTI_INTxInitTypeDef Interrupt1 = {
-    .INTx = EXTI_INT1,
-    .Trigger = EXTI_RISING_EDGE,
-    .Priority = INTERRUPTS_HIGH_PRIORITY,
-    .InterruptHandler = INT1_Routine
+EXTI_RBxInitTypeDef RB5obj = {
+    .RBx = EXTI_RB5,
+    .RisingEdgeInterruptHandler = RB5_RISR,
+    .FallingEdgeInterruptHandler = RB5_FISR
+};
+
+EXTI_RBxInitTypeDef RB6obj = {
+    .RBx = EXTI_RB6,
+    .RisingEdgeInterruptHandler = RB6_RISR,
+    .FallingEdgeInterruptHandler = RB6_FISR
+};
+
+EXTI_RBxInitTypeDef RB7obj = {
+    .RBx = EXTI_RB7,
+    .RisingEdgeInterruptHandler = RB7_RISR,
+    .FallingEdgeInterruptHandler = RB7_FISR
 };
 
 Std_ReturnType Status;
 int main(void)
 {
-    Status = LED_Init(&LED_RedLed);
-    Status |= LED_Init(&LED_BlueLed);
-    Status |= PUSHBUTTON_Init(&PB_Top);
-    Status |= PUSHBUTTON_Init(&PB_Bottom);
+    INTERRUPTS_EnableAllGlobalInterrupts();
+    INTERRUPTS_EnableAllPeripheralInterrupts();
     
-    INTERRUPTS_EnablePriorityFeature();
-    INTERRUPTS_EnableAllHighPriorityInterrupts();
+    Status |= LED_Init(&LED1);
+    Status |= LED_Init(&LED2);
+    Status |= LED_Init(&LED3);
+    Status |= LED_Init(&LED4);
+  
+    Status |= EXTI_RBxInit(&RB4obj);    
+    Status |= EXTI_RBxInit(&RB5obj);    
+    Status |= EXTI_RBxInit(&RB6obj);    
+    Status |= EXTI_RBxInit(&RB7obj);    
     
-    Status |= EXTI_INTxInit(&Interrupt0);    
-    Status |= EXTI_INTxInit(&Interrupt1);
-    
-    while(TRUE)
-    {
-//        Status |= PUSHBUTTON_RefreshStatus(&PB_Top);
-//        if (PUSHBUTTON_PRESSED == PB_Top.Status)
-//        {
-//            LED_TurnOn(&LED_RedLed);
-//        }
-//        
-//        Status |= PUSHBUTTON_RefreshStatus(&PB_Bottom);
-//        if (PUSHBUTTON_PRESSED == PB_Bottom.Status)
-//        {
-//            LED_TurnOff(&LED_RedLed);
-//        }
-        
-        LED_Toggle(&LED_BlueLed);
-        DELAY_MS(2000);
-    }
+    while(TRUE){}
     
     return 0;
 }

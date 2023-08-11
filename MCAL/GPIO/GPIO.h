@@ -1,13 +1,13 @@
 /**
  * @file GPIO.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
+ * 
  * @brief This header file provides essential definitions and functions for interfacing with
  * General Purpose Input/Output (GPIO) pins on a microcontroller.
- *
  * The GPIO module allows users to control the direction (input/output) and logic level (high/low)
  * of individual pins on the microcontroller, providing a flexible way to interact with external
  * devices and peripherals.
- *
+ * 
  * @note Include this header in your application code to utilize the GPIO functionality.
  * @note The file is thoroughly documented, providing clear explanations for each function's purpose,
  *       parameters, return values, and usage examples.
