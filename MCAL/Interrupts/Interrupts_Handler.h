@@ -1,11 +1,21 @@
 /**
  * @file Interrupts_Handler.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
+ *  
+ * @brief Centralized Interrupt Handlers
+ *
+ * The `Interrupts_Handler.h` header file serves as a central hub for managing interrupt service routines (ISRs)
+ * in an embedded application. It offers a collection of functions to handle different types of interrupts,
+ * abstracting low-level ISR implementations. This interface simplifies the organization of ISRs, enhances code
+ * modularity, and provides an efficient means to manage hardware events and corresponding actions.
+ *
+ * @note The file is thoroughly documented, offering clear explanations for each function's purpose, parameters,
+ *       return values, and usage examples.
+ * @note The `Interrupts_Handler.h` interface promotes code maintainability and can be used across diverse
+ *       microcontroller families and development environments.
+ * 
  * @version 0.1
- * @date August 1, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 01.08.23
  */
 
 #ifndef _INTERRUPTS_HANDLER_H_

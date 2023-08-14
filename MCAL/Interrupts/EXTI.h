@@ -2,20 +2,20 @@
  * @file EXTI.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
  * 
- * @brief The External Interrupt (EXTI) module is a hardware component in microcontrollers
- * that triggers interrupts in response to changes in the logic level of specific input pins.
- * It provides a means to efficiently handle external events, such as button presses or sensor
- * detections, without the need for continuous polling. By generating interrupts on rising or 
- * falling edges, the EXTI module enables timely and energy-efficient event-driven programming. 
- * It's a crucial tool for real-time responsiveness and effective coordination between microcontroller 
- * operations and external device actions. Proper configuration is essential to ensure reliable interrupt 
- * handling.
- * 
+ * @brief External Interrupt (EXTI) Interface
+ *
+ * The EXTI interface simplifies the management of External Interrupt (EXTI) functionality on a microcontroller.
+ * It provides functions to initialize and control interrupt sources, allowing users to effortlessly handle hardware
+ * events and trigger corresponding interrupt service routines. This interface abstracts low-level EXTI configurations,
+ * enhancing code clarity and offering a straightforward approach to implement interrupt-driven operations.
+ *
+ * @note The file is meticulously documented, providing clear explanations for each function's role, input parameters,
+ *       return values, and usage demonstrations.
+ * @note The EXTI interface fosters code portability and can be employed across different microcontroller families
+ *       and development environments.
+ *  
  * @version 0.1
- * @date August 1, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 01.08.23
  */
 
 #ifndef _EXTI_H_

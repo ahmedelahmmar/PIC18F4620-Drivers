@@ -2,10 +2,7 @@
  * @file LED.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
  * @version 0.2
- * @date 2023-07-25
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 25.07.23
  */
 
 #include "LED.h"

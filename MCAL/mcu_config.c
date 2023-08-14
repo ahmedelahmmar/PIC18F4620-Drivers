@@ -1,11 +1,8 @@
 /**
  * @file mcu_config.c
- * @author Ahmed Alaa (4hmedalaa@gmail.com)
+ * @author Ahmed Alaa (4hmedalaa@gmail.com) 
  * @version 0.1
- * @date 2023-07-22
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 22.07.23
  */
 
 // PIC18F4620 Configuration Bit Settings

@@ -1,11 +1,19 @@
 /**
  * @file PushButton.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
+ * 
+ * @brief Interface for Managing Push Buttons
+ *
+ * The PUSHBUTTON interface provides a user-friendly way to control push buttons on a microcontroller,
+ * abstracting low-level hardware configurations. It offers functions to initialize, read status, and
+ * manage push button states, making it easy to integrate push button functionality into applications.
+ *
+ * @note Include this header file in your application code to access the PUSHBUTTON control interface.
+ * @note The file is thoroughly documented, offering clear insights into each function's purpose, input
+ *       parameters, return values, and usage examples.
+ * 
  * @version 0.1
- * @date July 27, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 27.07.23
  */
 
 #ifndef _PUSH_BUTTON_H_

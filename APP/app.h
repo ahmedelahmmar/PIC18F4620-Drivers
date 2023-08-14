@@ -1,12 +1,8 @@
 /**
  * @file app.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @brief 
  * @version 0.1
- * @date 2023-07-22
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 22.07.23
  */
 
 #ifndef _APP_H_
@@ -16,6 +12,7 @@
 
 #include "../MCAL/GPIO/GPIO.h"
 #include "../MCAL/Interrupts/Interrupts.h"
+#include "../MCAL/EEPROM/EEPROM.h"
 
 #include "../ECUAL/LED/LED.h"
 #include "../ECUAL/PushButton/PushButton.h"

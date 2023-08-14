@@ -1,11 +1,22 @@
 /**
  * @file Interrupts_Config.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
+ * 
+ * @brief Interrupts Configuration
+ *
+ * The `Interrupts_Config.h` header file offers a centralized location to configure and manage interrupt settings
+ * for an embedded application. It provides macros to customize interrupt priorities, enable or disable
+ * interrupts, and set interrupt-related parameters. This interface simplifies the management of interrupt 
+ * configurations, enhances code organization, and provides a convenient way to tailor interrupt behavior 
+ * to specific project requirements.
+ * 
+ * @note The file is meticulously documented, offering clear explanations for each configuration option,
+ *       parameter usage, and customization examples.
+ * @note The `Interrupts_Config.h` interface promotes code adaptability and can be utilized across diverse
+ *       microcontroller families and development environments.
+ * 
  * @version 0.1
- * @date August 1, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 01.08.23
  */
 
 #ifndef _INTERRUPTS_CONFIG_H_

@@ -13,7 +13,7 @@ OBJ_SUBDIRS := $(sort $(dir $(OBJ_FILES)))
 define sort_dirs_by_depth
 $(shell for dir in $(1); do echo "$$dir $$(echo $$dir | tr -cd '/' | wc -c)"; done | sort -k2 -t' ' -n | cut -d' ' -f1)
 endef
-SORTED_OBJ_SUBDIRS := $(call sort_dirs_by_depth,$(OBJ_SUBDIRS))
+SORTED_OBJ_SUBDIRS := $(call sort_dirs_by_depth, $(OBJ_SUBDIRS))
 
 EXECUTABLE := $(OBJ_DIR)/$(TARGET_FILENAME)
 
@@ -24,10 +24,10 @@ all: build
 build: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJ_FILES) | $(OBJ_DIR)
-	$(COMPILER) $(COMPILER_FLAGS) $^ -o $@
+	@$(COMPILER) $(COMPILER_FLAGS) $^ -o $@
 
 $(OBJ_DIR)/%.p1: %.c | $(OBJ_DIR)
-	$(COMPILER) $(COMPILER_FLAGS) -c $< -o $@
+	@$(COMPILER) $(COMPILER_FLAGS) -c $< -o $@
 
 .PHONY: create_build_directories 
 create_build_directories:

@@ -1,11 +1,23 @@
 /**
  * @file Interrupts_Private.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
+ * 
+ * @brief Private Interrupt Services
+ *
+ * The `Interrupts_Private.h` header file houses private functions and services that are dedicated to supporting
+ * the internal workings of the interrupt module within an embedded application. These functions handle specific
+ * interrupt-related tasks and contribute to the overall functionality of the interrupt management system.
+ * By keeping them in a separate file, this interface encapsulates internal logic, enhances code modularity,
+ * and provides a structured approach to managing private interrupt services.
+ *
+ * @note Include this header file only in implementation files that require access to private interrupt services.
+ * @note The file is documented to clarify the purpose, input parameters, return values, and internal usage of
+ *       each private function and service.
+ * @note The `Interrupts_Private.h` interface improves code organization and maintainability by isolating
+ *       internal interrupt-related operations from the main public interface.
+ * 
  * @version 0.1
- * @date August 1, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 01.08.23
  */
 
 #ifndef _INTERRUPTS_PRIVATE_H_

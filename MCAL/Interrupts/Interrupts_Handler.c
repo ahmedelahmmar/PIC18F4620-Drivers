@@ -2,10 +2,7 @@
  * @file Interrupts_Handler.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
  * @version 0.1
- * @date August 1, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 01.08.23
  */
 
 #include "Interrupts_Private.h"

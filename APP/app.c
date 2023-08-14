@@ -1,12 +1,8 @@
 /**
  * @file app.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @brief 
  * @version 0.1
- * @date 2023-07-22
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 22.07.23
  */
 
 #include "app.h"
@@ -119,9 +115,9 @@ int main(void)
     Status |= EXTI_RBxInit(&RB4obj);    
     Status |= EXTI_RBxInit(&RB5obj);    
     Status |= EXTI_RBxInit(&RB6obj);    
-    Status |= EXTI_RBxInit(&RB7obj);    
+    Status |= EXTI_RBxInit(&RB7obj);
     
-    while(TRUE){}
+    while(TRUE);
     
     return 0;
 }

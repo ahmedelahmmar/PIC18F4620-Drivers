@@ -1,11 +1,22 @@
 /**
  * @file GPIO_Config.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
+ * 
+ * @brief GPIO Configuration Interface
+ *
+ * The GPIO_Config.h header file offers a centralized location to configure and manage GPIO settings for an
+ * embedded application. It provides macros, constants, and preprocessor directives to customize GPIO pin
+ * assignments, set pin modes, and define port configurations. This interface simplifies the management of GPIO
+ * configurations, enhances code organization, and provides a convenient way to tailor GPIO behavior to specific
+ * project requirements.
+ *
+ * @note The file is documented, offering clear explanations for each configuration option, parameter usage,
+ *       and customization examples.
+ * @note The GPIO_Config.h interface promotes code adaptability and can be utilized across diverse microcontroller
+ *       families and development environments.
+ * 
  * @version 0.1
- * @date 2023-07-24
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 24.07.23
  */
 
 #ifndef _GPIO_CONFIG_H_

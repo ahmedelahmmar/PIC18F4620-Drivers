@@ -1,6 +1,7 @@
 /**
  * @file LED.h
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
+ * 
  * @brief This header file provides an interface for controlling LEDs.
  *
  * The LED interface allows users to easily manage LEDs on a microcontroller without dealing with
@@ -10,13 +11,9 @@
  * @note Include this header file in your application code to access the LED control interface.
  * @note The file is thoroughly documented, providing clear explanations for each function's purpose,
  *       parameters, return values, and usage examples.
- * @note The LED interface is designed to be portable and can be used with different microcontroller
- *       families and development environments.
+ * 
  * @version 0.2
- * @date 2023-07-25
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 25.07.23 
  */
 #ifndef _LED_H_
 #define	_LED_H_

@@ -2,10 +2,7 @@
  * @file PushButton.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com) 
  * @version 0.1
- * @date July 27, 2023
- * 
- * @copyright Copyright (c) 2023
- * 
+ * @date 27.07.23
  */
 
 #include "PushButton.h"
