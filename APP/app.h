@@ -13,6 +13,7 @@
 #include "../MCAL/GPIO/GPIO.h"
 #include "../MCAL/Interrupts/Interrupts.h"
 #include "../MCAL/EEPROM/EEPROM.h"
+#include "../MCAL/ADC/ADC.h"
 
 #include "../ECUAL/LED/LED.h"
 #include "../ECUAL/PushButton/PushButton.h"

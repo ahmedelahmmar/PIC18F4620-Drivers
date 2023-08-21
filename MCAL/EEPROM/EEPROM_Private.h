@@ -23,8 +23,7 @@
 #define _EEPROM_PRIVATE_H_
 
 #include "EEPROM.h"
-#include <../proc/pic18f4620.h>
-#include <../pic18.h>
+#include "../mcu_registers.h"
 
 #define EEPROM_DataRegister                         (EEDATA)
 #define EEPROM_LowerAddressRegister                 (EEADR)

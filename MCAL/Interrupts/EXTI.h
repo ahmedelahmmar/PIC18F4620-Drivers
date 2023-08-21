@@ -24,13 +24,13 @@
 #include "../../MCAL/GPIO/GPIO.h"
 
 #include "Interrupts_Config.h"
-#include "EXTI.h"
 
 #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
 typedef enum
 {
     INTERRUPTS_LOW_PRIORITY = 0,
-    INTERRUPTS_HIGH_PRIORITY
+    INTERRUPTS_HIGH_PRIORITY,
+    INTERRUPTS_PRIORITY_LIMIT
             
 } INTERRUPTS_PriorityTypeDef;
 #endif
@@ -90,7 +90,7 @@ typedef struct
 #endif
 
 #if ((INTERRUPTS_PRIORITY_FEATURE != STD_ON) && (INTERRUPTS_PRIORITY_FEATURE != STD_OFF))
-#warning "'INTERRUPTS_PRIORITY_FEATURE' not configured in Interrupt_Config.h"
+#warning "'INTERRUPTS_PRIORITY_FEATURE' not configured in Interrupts_Config.h"
 #endif
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
@@ -134,7 +134,7 @@ Std_ReturnType EXTI_INTxInit(const EXTI_INTxInitTypeDef * const loc_INTx);
 Std_ReturnType EXTI_INTxDeInit(const EXTI_INTxInitTypeDef * const loc_INTx);
 #endif
 #if ((INTERRUPTS_INTx_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_INTx_INTERRUPTS_FEATURE != STD_OFF))
-#warning "'INTERRUPTS_INTx_INTERRUPTS_FEATURE' not configured in Interrupt_Config.h"
+#warning "'INTERRUPTS_INTx_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
 #endif
 
 #if (INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE == STD_ON)
@@ -180,7 +180,7 @@ Std_ReturnType EXTI_RBxInit(const EXTI_RBxInitTypeDef * const loc_RBx);
 Std_ReturnType EXTI_RBxDeInit(const EXTI_RBxInitTypeDef * const loc_RBx);
 #endif
 #if ((INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE != STD_OFF))
-#warning "'INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE' not configured in Interrupt_Config.h"
+#warning "'INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
 #endif
 
 #endif	/* _EXTI_H_ */

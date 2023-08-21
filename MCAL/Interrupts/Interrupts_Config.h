@@ -28,7 +28,7 @@
  *     - STD_ON: Enable the interrupt priority feature.
  *     - STD_OFF: Disable the interrupt priority feature.
  */
-#define INTERRUPTS_PRIORITY_FEATURE                  STD_OFF
+#define INTERRUPTS_PRIORITY_FEATURE                     STD_OFF
 
 /**
  * @def INTERRUPTS_INTx_INTERRUPTS_FEATURE
@@ -36,7 +36,7 @@
  *     - STD_ON: Enable the INTx interrupts.
  *     - STD_OFF: Disable the INTx interrupts.
  */
-#define INTERRUPTS_INTx_INTERRUPTS_FEATURE           STD_OFF
+#define INTERRUPTS_INTx_INTERRUPTS_FEATURE              STD_OFF
 
 /**
  * @def INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE
@@ -44,7 +44,15 @@
  *     - STD_ON: Enable the OnChange interrupts.
  *     - STD_OFF: Disable the OnChange interrupts.
  */
-#define INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE      STD_ON
+#define INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE         STD_OFF
+
+/**
+ * @def INTERRUPTS_ADC_INTERRUPTS_FEAUTURE
+ * @brief Control macro to enable or disable the interrupts for the ADC module.
+ *     - STD_ON: Enable ADC interrupts.
+ *     - STD_OFF: Disable ADC interrupts.
+ */
+#define INTERRUPTS_ADC_INTERRUPTS_FEAUTURE              STD_ON
 
 #endif	/* _INTERRUPTS_CONFIG_H_ */
 

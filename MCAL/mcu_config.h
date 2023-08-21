@@ -19,7 +19,7 @@
 #ifndef _MCU_CONFIG_H_
 #define	_MCU_CONFIG_H_
 
-#define NUMBER_OF_PORTS             4
+#define NUMBER_OF_PORTS             5
 #define NUMBER_OF_PINS_PER_PORT     8
 #define NUMBER_OF_INTx_PINS         3
 #define NUMBER_OF_RBx_PINS          4

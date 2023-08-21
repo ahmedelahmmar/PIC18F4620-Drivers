@@ -93,6 +93,13 @@ void __interrupt() InterruptHandler(void)
         EXTI_RBx_Flags[EXTI_RB7] ^= 1;
     }
     #endif
+
+    #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+    if (INTI_ADC_Flag_())
+    {
+        ADC_ISR();
+    }
+    #endif
 }
 
 #endif

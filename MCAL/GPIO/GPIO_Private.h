@@ -24,7 +24,7 @@
 
 #include "../../lib/compiler.h"
 #include "../../lib/bitmasking.h"
-#include <../proc/pic18f4620.h>
+#include "../mcu_registers.h"
 
 #define GPIO_ALL_PINS       0xFF
 

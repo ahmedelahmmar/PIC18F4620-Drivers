@@ -26,7 +26,7 @@
 #include "../mcu_config.h"
 #include "Interrupts_Config.h"
 #include "../../lib/compiler.h"
-#include <../proc/pic18f4620.h>
+#include "../mcu_registers.h"
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
 
@@ -111,6 +111,22 @@
     #endif
 #endif
 
+#if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+
+#define INTI_ADC_EnableInterrupt_()              (PIE1bits.ADIE = 1)
+#define INTI_ADC_DisableInterrupt_()             (PIE1bits.ADIE = 0)
+#define INTI_ADC_ClearFlag_()                    (PIR1bits.ADIF = 0)    
+#define INTI_ADC_Flag_()                         (PIR1bits.ADIF)  
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define INTI_ADC_SetAsHighPriority_()        (IPR1bits.ADIP = 1)
+    #define INTI_ADC_SetAsLowPriority_()         (IPR1bits.ADIP = 0)
+    #define INTI_ADC_DeInitPriority_()           (INTI_ADC_SetAsLowPriority_())
+
+    #endif
+#endif
+
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
 void EXTI_INT0_ISR(void);
 void EXTI_INT1_ISR(void);
@@ -130,5 +146,10 @@ void EXTI_RB6_FallingEdgeISR(void);
 void EXTI_RB7_RisingEdgeISR(void);
 void EXTI_RB7_FallingEdgeISR(void);
 #endif
+
+#if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+void ADC_ISR(void);
+#endif
+
 #endif	/* _INTERRUPTS_PRIVATE_H_ */
 

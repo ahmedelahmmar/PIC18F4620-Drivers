@@ -14,11 +14,29 @@
  * @note The INTI interface ensures portability and can be utilized across different microcontroller families
  *       and development environments.
  * 
- * @version 0.1
+ * @version 0.2
  * @date 01.08.23 
  */
 
 #ifndef _INTI_H_
 #define _INTI_H_
 
+#include "Interrupts_Config.h"
+#include "EXTI.h"
+
+#if ((INTERRUPTS_ADC_INTERRUPTS_FEAUTURE != STD_ON) && (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE != STD_OFF))
+#warning "'INTERRUPTS_ADC_INTERRUPTS_FEAUTURE' not configured in Interrupts_Config.h"
 #endif
+
+#if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+void INTI_ADC_EnableInterrupt(void);
+void INTI_ADC_DisableInterrupt(void);
+void INTI_ADC_ClearFlag(void);
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_ADC_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+    void INTI_ADC_DeInitPriority(void);
+    #endif
+#endif
+
+#endif /* _INTI_H_ */
