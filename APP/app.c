@@ -7,79 +7,52 @@
 
 #include "app.h"
 
-void ADCx_Handler(void);
-
-ADC_InitTypeDef ADCx = {
-    .InterruptHandler = ADCx_Handler,
-    .ChannelConfiguration = ADC_CHANNEL_3_AND_BELOW_ANALOG,
-    .AquisitionTime = ADC_AQT_12TAD,
-    .Prescaler = ADC_PRESCALER_RC_OSC,
-    .ResultAlignment = ADC_ALIGN_LEFT,
-    .Vref = ADC_VREF_INTERNAL,
+LED_InitTypeDef LED1 = {
+    .Channel.Pin = GPIO_PIN0,
+    .Channel.Port = GPIO_PORTC,
+    .Configuration = LED_ACTIVE_HIGH,
+    .Status = LED_OFF
 };
 
-volatile ADC_ValueTypeDef pot0, pot1, pot2, pot3;
-volatile uint8 ADC_Req = 0;
+void T0_Handler(void);
 
-volatile Std_ReturnType status = E_OK; 
+TIMER0_InitTypeDef T0 = {
+    .InterruptHandler = T0_Handler,
+    .Mode = TIMER0_MODE_TIMER,
+    .Resolution = TIMER0_RESOLUTION_8BIT,
+    .Prescaler = TIMER0_PRESCALER_16,
+};
 
+volatile Std_ReturnType Status = E_OK; 
 int main(void)
 {   
     INTERRUPTS_EnableAllGlobalInterrupts();
     INTERRUPTS_EnableAllPeripheralInterrupts();
 
-    status |= ADC_Init(&ADCx);
+    LED_Init(&LED1);
+    TIMER0_Init(&T0);
+    TIMER0_StartTimer(&T0, 1);
     
     while (TRUE)
     {
-        switch (ADC_Req)
-        {
-            case 0:
-                status |= ADC_StartConversion(ADC_CHANNEL_0);
-                break;
-
-            case 1:
-                status |= ADC_StartConversion(ADC_CHANNEL_1);
-                break;
-
-            case 2:
-                status |= ADC_StartConversion(ADC_CHANNEL_2);
-                break;
-
-            case 3:
-                status |= ADC_StartConversion(ADC_CHANNEL_3);
-                break;
-
-            default:
-                status = E_NOT_OK;
-        }
+        
     }
 
-    return status;
+    return Status;
 }
 
-void ADCx_Handler(void)
+void T0_Handler(void)
 {
-    switch (ADC_Req++)
+    static uint8 counter = 0;
+    counter++;
+    if (counter <= 75)
     {
-        case 0:
-            status |= ADC_Read(&ADCx, &pot0);
-            break;
-
-        case 1:
-            status |= ADC_Read(&ADCx, &pot1);
-            break;
-
-        case 2:
-            status |= ADC_Read(&ADCx, &pot2);
-            break;
-
-        case 3:
-            status |= ADC_Read(&ADCx, &pot3);
-            ADC_Req = 0;
-            break;
-
-        default:
-            status = E_NOT_OK;
+        LED_TurnOn(&LED1);
     }
+    else if (counter < 100)
+    {
+        LED_TurnOff(&LED1);
+    }
+    else counter = 0;
+
 }

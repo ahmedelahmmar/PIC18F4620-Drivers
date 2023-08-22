@@ -95,9 +95,16 @@ void __interrupt() InterruptHandler(void)
     #endif
 
     #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
-    if (INTI_ADC_Flag_())
+    if (INTI_ADC_PrivFlag())
     {
         ADC_ISR();
+    }
+    #endif
+
+    #if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+    if (INTI_TIMER0_PrivFlag())
+    {
+        TIMER0_ISR();
     }
     #endif
 }

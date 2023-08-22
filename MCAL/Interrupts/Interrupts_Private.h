@@ -111,18 +111,36 @@
     #endif
 #endif
 
+#define INTI_ADC_PrivClearFlag()                    (PIR1bits.ADIF = 0)    
+#define INTI_ADC_PrivFlag()                         (PIR1bits.ADIF)
+
 #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
 
-#define INTI_ADC_EnableInterrupt_()              (PIE1bits.ADIE = 1)
-#define INTI_ADC_DisableInterrupt_()             (PIE1bits.ADIE = 0)
-#define INTI_ADC_ClearFlag_()                    (PIR1bits.ADIF = 0)    
-#define INTI_ADC_Flag_()                         (PIR1bits.ADIF)  
+#define INTI_ADC_PrivEnableInterrupt()              (PIE1bits.ADIE = 1)
+#define INTI_ADC_PrivDisableInterrupt()             (PIE1bits.ADIE = 0)
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
 
-    #define INTI_ADC_SetAsHighPriority_()        (IPR1bits.ADIP = 1)
-    #define INTI_ADC_SetAsLowPriority_()         (IPR1bits.ADIP = 0)
-    #define INTI_ADC_DeInitPriority_()           (INTI_ADC_SetAsLowPriority_())
+    #define INTI_ADC_PrivSetAsHighPriority()        (IPR1bits.ADIP = 1)
+    #define INTI_ADC_PrivSetAsLowPriority()         (IPR1bits.ADIP = 0)
+    #define INTI_ADC_PrivDeInitPriority()           (INTI_ADC_PrivSetAsLowPriority())
+
+    #endif
+#endif
+
+#define INTI_TIMER0_PrivClearFlag()                    (INTCONbits.TMR0IF = 0)    
+#define INTI_TIMER0_PrivFlag()                         (INTCONbits.TMR0IF)  
+
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+
+#define INTI_TIMER0_PrivEnableInterrupt()              (INTCONbits.TMR0IE = 1)
+#define INTI_TIMER0_PrivDisableInterrupt()             (INTCONbits.TMR0IE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define INTI_TIMER0_PrivSetAsHighPriority()        (INTCON2bits.TMR0IP = 1)
+    #define INTI_TIMER0_PrivSetAsLowPriority()         (INTCON2bits.TMR0IP = 0)
+    #define INTI_TIMER0_PrivDeInitPriority()           (INTI_TIMER0_PrivSetAsLowPriority())
 
     #endif
 #endif
@@ -150,6 +168,11 @@ void EXTI_RB7_FallingEdgeISR(void);
 #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
 void ADC_ISR(void);
 #endif
+
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+void TIMER0_ISR(void);
+#endif
+
 
 #endif	/* _INTERRUPTS_PRIVATE_H_ */
 

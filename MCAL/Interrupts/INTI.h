@@ -28,14 +28,33 @@
 #warning "'INTERRUPTS_ADC_INTERRUPTS_FEAUTURE' not configured in Interrupts_Config.h"
 #endif
 
+void INTI_ADC_ClearFlag(void);
+uint8 INTI_ADC_Flag(void);
+
 #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
 void INTI_ADC_EnableInterrupt(void);
 void INTI_ADC_DisableInterrupt(void);
-void INTI_ADC_ClearFlag(void);
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
     void INTI_ADC_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
     void INTI_ADC_DeInitPriority(void);
+    #endif
+#endif
+
+#if ((INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE != STD_ON) && (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE != STD_OFF))
+#warning "'INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE' not configured in Interrupts_Config.h"
+#endif
+
+void INTI_TIMER0_ClearFlag(void);
+uint8 INTI_TIMER0_Flag(void);
+
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+void INTI_TIMER0_EnableInterrupt(void);
+void INTI_TIMER0_DisableInterrupt(void);
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_TIMER0_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+    void INTI_TIMER0_DeInitPriority(void);
     #endif
 #endif
 

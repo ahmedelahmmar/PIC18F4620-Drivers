@@ -4,7 +4,9 @@ COMPILER_FLAGS := -O0 -std=c99 -fasmfile -mcpu=18f4620 -mdebugger=none -memi=wor
 TARGET_FILENAME := pic18f4620
 
 SRC_DIRS := MCAL ECUAL APP
-SRC_FILES :=  $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c)) $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/**/*.c))
+SRC_FILES :=  $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/*.c))\
+			  $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/**/*.c))\
+			  $(foreach dir, $(SRC_DIRS), $(wildcard $(dir)/**/**/*.c))
 
 OBJ_DIR := build
 OBJ_FILES := $(patsubst %.c, $(OBJ_DIR)/%.p1, $(SRC_FILES))

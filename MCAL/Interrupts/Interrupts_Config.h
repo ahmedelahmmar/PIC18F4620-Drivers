@@ -52,7 +52,15 @@
  *     - STD_ON: Enable ADC interrupts.
  *     - STD_OFF: Disable ADC interrupts.
  */
-#define INTERRUPTS_ADC_INTERRUPTS_FEAUTURE              STD_ON
+#define INTERRUPTS_ADC_INTERRUPTS_FEAUTURE              STD_OFF
+
+/**
+ * @def INTERRUPTS_ADC_INTERRUPTS_FEAUTURE
+ * @brief Control macro to enable or disable the interrupts for Timer0.
+ *     - STD_ON: Enable Timer0 interrupts.
+ *     - STD_OFF: Disable Timer0 interrupts.
+ */
+#define INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE           STD_ON
 
 #endif	/* _INTERRUPTS_CONFIG_H_ */
 

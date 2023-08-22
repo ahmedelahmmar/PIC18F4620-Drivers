@@ -80,28 +80,36 @@ Std_ReturnType ADC_Init(const ADC_InitTypeDef * const InitPtr)
 Std_ReturnType ADC_DeInit(const ADC_InitTypeDef * const InitPtr)
 {
     Std_ReturnType loc_ret = E_OK;
-    
-    ADC_Disable();
 
-    uint8 ADC_ChannelIterator;
-    GPIO_InitTypeDef ADC_Channelx;
-
-    for (ADC_ChannelIterator = 0; ADC_ChannelIterator < (ADC_CHANNEL_LIMIT - InitPtr->ChannelConfiguration - 1); ++ADC_ChannelIterator)
+    if (NULL_PTR != InitPtr) 
     {
-        ADC_Channelx.Pin = ADC_ChannelPins[ADC_ChannelIterator][ADC_CHANNEL_PIN];
-        ADC_Channelx.Port = ADC_ChannelPins[ADC_ChannelIterator][ADC_CHANNEL_PORT];
+        ADC_Disable();
 
-        loc_ret |= GPIO_DeInitChannel(&ADC_Channelx);
-    }
+        uint8 ADC_ChannelIterator;
+        GPIO_InitTypeDef ADC_Channelx;
 
-#if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
-    INTI_ADC_DisableInterrupt();
-    ADC_DeInitInterruptHandler();
+        for (ADC_ChannelIterator = 0; ADC_ChannelIterator < (ADC_CHANNEL_LIMIT - InitPtr->ChannelConfiguration - 1); ++ADC_ChannelIterator)
+        {
+            ADC_Channelx.Pin = ADC_ChannelPins[ADC_ChannelIterator][ADC_CHANNEL_PIN];
+            ADC_Channelx.Port = ADC_ChannelPins[ADC_ChannelIterator][ADC_CHANNEL_PORT];
 
-    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
-    ADC_DeInitPriority();
+            loc_ret |= GPIO_DeInitChannel(&ADC_Channelx);
+        }
+
+    #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+        INTI_ADC_DisableInterrupt();
+        ADC_DeInitInterruptHandler();
+
+        #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+        ADC_DeInitPriority();
+        #endif
     #endif
-#endif
+    }  
+    else
+    {
+        loc_ret = E_NOT_OK;
+    } 
+
     return loc_ret;
 }
 
