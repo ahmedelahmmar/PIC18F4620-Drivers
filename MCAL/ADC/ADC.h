@@ -15,7 +15,7 @@
  * @note The ADC interface promotes efficient analog data processing and can be utilized across different
  *       microcontroller families and development environments.
  * 
- * @version 0.1
+ * @version 0.2
  * @date 17.08.23
  */
 
@@ -79,7 +79,7 @@ typedef enum
 
 typedef enum
 {
-    ADC_AQT_DEFAULT_TAD = 0,
+    ADC_AQT_0TAD = 0,
     ADC_AQT_2TAD,
     ADC_AQT_4TAD,
     ADC_AQT_6TAD,
@@ -154,7 +154,7 @@ Std_ReturnType ADC_Init(const ADC_InitTypeDef * const InitPtr);
  *
  * @note After calling this function, the ADC module should be reinitialized before performing any ADC operations.
  */
-Std_ReturnType ADC_DeInit(void);
+Std_ReturnType ADC_DeInit(const ADC_InitTypeDef * const InitPtr);
 
 /**
  * @brief Start an ADC conversion on the specified channel.

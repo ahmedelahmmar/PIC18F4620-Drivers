@@ -1,7 +1,7 @@
 /**
  * @file ADC.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @version 0.1
+ * @version 0.2
  * @date 17.08.23
  */
 
@@ -77,7 +77,7 @@ Std_ReturnType ADC_Init(const ADC_InitTypeDef * const InitPtr)
     return loc_ret;
 }
 
-Std_ReturnType ADC_DeInit(void)
+Std_ReturnType ADC_DeInit(const ADC_InitTypeDef * const InitPtr)
 {
     Std_ReturnType loc_ret = E_OK;
     
@@ -86,7 +86,7 @@ Std_ReturnType ADC_DeInit(void)
     uint8 ADC_ChannelIterator;
     GPIO_InitTypeDef ADC_Channelx;
 
-    for (ADC_ChannelIterator = 0; ADC_ChannelIterator < ADC_CHANNEL_LIMIT; ++ADC_ChannelIterator)
+    for (ADC_ChannelIterator = 0; ADC_ChannelIterator < (ADC_CHANNEL_LIMIT - InitPtr->ChannelConfiguration - 1); ++ADC_ChannelIterator)
     {
         ADC_Channelx.Pin = ADC_ChannelPins[ADC_ChannelIterator][ADC_CHANNEL_PIN];
         ADC_Channelx.Port = ADC_ChannelPins[ADC_ChannelIterator][ADC_CHANNEL_PORT];
