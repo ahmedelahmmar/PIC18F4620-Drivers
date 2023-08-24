@@ -27,6 +27,7 @@
 #include "Interrupts_Config.h"
 #include "../../lib/compiler.h"
 #include "../mcu_registers.h"
+#include "INTI.h"
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
 
@@ -111,10 +112,10 @@
     #endif
 #endif
 
-#define INTI_ADC_PrivClearFlag()                    (PIR1bits.ADIF = 0)    
-#define INTI_ADC_PrivFlag()                         (PIR1bits.ADIF)
+#define INTI_ADC_PrivClearFlag()                            (PIR1bits.ADIF = 0)    
+#define INTI_ADC_PrivFlag()                                 (PIR1bits.ADIF)
 
-#if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_ADC_INTERRUPTS_FEATURE == STD_ON)
 
 #define INTI_ADC_PrivEnableInterrupt()              (PIE1bits.ADIE = 1)
 #define INTI_ADC_PrivDisableInterrupt()             (PIE1bits.ADIE = 0)
@@ -128,10 +129,10 @@
     #endif
 #endif
 
-#define INTI_TIMER0_PrivClearFlag()                    (INTCONbits.TMR0IF = 0)    
-#define INTI_TIMER0_PrivFlag()                         (INTCONbits.TMR0IF)  
+#define INTI_TIMER0_PrivClearFlag()                         (INTCONbits.TMR0IF = 0)    
+#define INTI_TIMER0_PrivFlag()                              (INTCONbits.TMR0IF)  
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 
 #define INTI_TIMER0_PrivEnableInterrupt()              (INTCONbits.TMR0IE = 1)
 #define INTI_TIMER0_PrivDisableInterrupt()             (INTCONbits.TMR0IE = 0)
@@ -144,6 +145,31 @@
 
     #endif
 #endif
+
+#define INTI_EUSART_PrivTxFlag()                            (PIR1bits.TXIF)
+#define INTI_EUSART_PrivRxFlag()                            (PIR1bits.RCIF)
+#if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
+
+#define INTI_EUSART_PrivEnableTxInterrupt()                 (PIE1bits.TXIE = 1)
+#define INTI_EUSART_PrivDisableTxInterrupt()                (PIE1bits.TXIE = 0)
+
+#define INTI_EUSART_PrivEnableRxInterrupt()                 (PIE1bits.RCIE = 1)
+#define INTI_EUSART_PrivDisableRxInterrupt()                (PIE1bits.RCIE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON) 
+
+    #define INTI_EUSART_PrivSetTxAsHighPriority()           (IPR1bits.TXIP = 1)
+    #define INTI_EUSART_PrivSetTxAsLowPriority()            (IPR1bits.TXIP = 0)
+
+    #define INTI_EUSART_PrivSetRxAsHighPriority()           (IPR1bits.RCIP = 1)
+    #define INTI_EUSART_PrivSetRxAsLowPriority()            (IPR1bits.RCIP = 0)
+
+    #define INTI_EUSART_PrivDeInitTxPriority()              (INTI_EUSART_PrivSetTxAsLowPriority())
+    #define INTI_EUSART_PrivDeInitRxPriority()              (INTI_EUSART_PrivSetRxAsLowPriority())
+
+    #endif
+#endif
+
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
 void EXTI_INT0_ISR(void);
@@ -165,14 +191,23 @@ void EXTI_RB7_RisingEdgeISR(void);
 void EXTI_RB7_FallingEdgeISR(void);
 #endif
 
-#if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_ADC_INTERRUPTS_FEATURE == STD_ON)
 void ADC_ISR(void);
 #endif
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 void TIMER0_ISR(void);
 #endif
 
+#if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
+#if (INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE == STD_ON)
+void EUSART_RX_ISR(void);
+#endif
+
+#if (INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE == STD_ON)
+void EUSART_TX_ISR(void);
+#endif
+#endif
 
 #endif	/* _INTERRUPTS_PRIVATE_H_ */
 

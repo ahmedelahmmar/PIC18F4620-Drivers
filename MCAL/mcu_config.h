@@ -20,7 +20,7 @@
 #define	_MCU_CONFIG_H_
 
 #define _XTAL_FREQ          16000000UL
-#define FCPU                _XTAL_FREQ
+#define FOSC                _XTAL_FREQ
 
 #define NUMBER_OF_PORTS             5
 #define NUMBER_OF_PINS_PER_PORT     8

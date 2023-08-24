@@ -12,7 +12,7 @@ static uint16 TIMER0_nOverflows = 0;
 static uint16 TIMER0_InitialPreload = 0;
 static const TIMER0_InitTypeDef *TIMER0_ConfigObj = NULL_PTR;
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 static void (*TIMER0_InterruptHandler)(void) = NULL_PTR;
 
 static Std_ReturnType TIMER0_InitInterruptHandler(const TIMER0_InitTypeDef * const InitPtr);
@@ -46,11 +46,11 @@ Std_ReturnType TIMER0_Init(const TIMER0_InitTypeDef * const InitPtr)
 
         loc_ret |= TIMER0_ConfigMode(InitPtr);
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
         loc_ret |= TIMER0_InitInterruptHandler(InitPtr);
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
-        loc_ret |= TIMER0_InitPriority(InitPtr->Priority);
+        loc_ret |= TIMER0_InitPriority(InitPtr);
     #endif
 #endif   
     }
@@ -71,7 +71,7 @@ Std_ReturnType TIMER0_DeInit(const TIMER0_InitTypeDef * const InitPtr)
         TIMER0_PrivDisable();
         TIMER0_ConfigObj = NULL_PTR;
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
         TIMER0_DeInitInterruptHandler();
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
@@ -96,7 +96,7 @@ Std_ReturnType TIMER0_StartTimer(const TIMER0_InitTypeDef * const InitPtr, const
     {
         loc_ret = TIMER0_ConfigTimerDelay(InitPtr, delay_ms);
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
         INTI_TIMER0_ClearFlag();
         INTI_TIMER0_EnableInterrupt();
 #endif
@@ -123,7 +123,7 @@ Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr)
 
         loc_ret = GPIO_SetChannelDirection(&TIMER0_Channelx, GPIO_INPUT);
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
         INTI_TIMER0_ClearFlag();
         INTI_TIMER0_EnableInterrupt();
 #endif
@@ -137,7 +137,7 @@ Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr)
     return loc_ret;
 }
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 
 static Std_ReturnType TIMER0_InitInterruptHandler(const TIMER0_InitTypeDef * const InitPtr)
 {
@@ -259,11 +259,11 @@ static Std_ReturnType TIMER0_ConfigTimerDelay(const TIMER0_InitTypeDef * const I
 
         if (TIMER0_NO_PRESCALER == InitPtr->Prescaler)
         {
-            loc_TickTime_us = (uint8)(4 / (uint32)(FCPU / 1000000UL));
+            loc_TickTime_us = (uint8)(4 / (uint32)(FOSC / 1000000UL));
         }
         else
         {
-            loc_TickTime_us = (uint8)(((uint16)(2 << InitPtr->Prescaler) * 4) / (uint32)(FCPU / 1000000UL));
+            loc_TickTime_us = (uint8)(((uint16)(2 << InitPtr->Prescaler) * 4) / (uint32)(FOSC / 1000000UL));
         }
 
         uint32 loc_TotalTicks = ((loc_delay_ms * 1000U) / loc_TickTime_us);
@@ -316,7 +316,7 @@ static Std_ReturnType TIMER0_SetPreload(const TIMER0_InitTypeDef * const InitPtr
     return loc_ret;
 }
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 void TIMER0_ISR(void)
 {
     INTI_TIMER0_ClearFlag();

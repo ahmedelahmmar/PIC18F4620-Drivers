@@ -71,7 +71,7 @@ typedef struct
     TIMER0_SourceEdgeTypeDef EdgeSelect;
     TIMER0_PrescalerTypeDef Prescaler;
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
     void (*InterruptHandler)(void);
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)

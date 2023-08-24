@@ -47,20 +47,44 @@
 #define INTERRUPTS_ON_CHANGE_INTERRUPTS_FEATURE         STD_OFF
 
 /**
- * @def INTERRUPTS_ADC_INTERRUPTS_FEAUTURE
+ * @def INTERRUPTS_ADC_INTERRUPTS_FEATURE
  * @brief Control macro to enable or disable the interrupts for the ADC module.
  *     - STD_ON: Enable ADC interrupts.
  *     - STD_OFF: Disable ADC interrupts.
  */
-#define INTERRUPTS_ADC_INTERRUPTS_FEAUTURE              STD_OFF
+#define INTERRUPTS_ADC_INTERRUPTS_FEATURE              STD_OFF
 
 /**
- * @def INTERRUPTS_ADC_INTERRUPTS_FEAUTURE
+ * @def INTERRUPTS_ADC_INTERRUPTS_FEATURE
  * @brief Control macro to enable or disable the interrupts for Timer0.
  *     - STD_ON: Enable Timer0 interrupts.
  *     - STD_OFF: Disable Timer0 interrupts.
  */
-#define INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE           STD_ON
+#define INTERRUPTS_TIMER0_INTERRUPTS_FEATURE           STD_ON
+
+/**
+ * @def INTERRUPTS_EUSART_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the interrupts for the EUSART module.
+ *     - STD_ON: Enable EUSART interrupts.
+ *     - STD_OFF: Disable EUSART interrupts.
+ */
+#define INTERRUPTS_EUSART_INTERRUPTS_FEATURE           STD_ON
+
+/**
+ * @def INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the transmitter interrupts for the EUSART module.
+ *     - STD_ON: Enable transmitter interrupts.
+ *     - STD_OFF: Disable transmitter interrupts.
+ */
+#define INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE         STD_OFF
+
+/**
+ * @def INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the reciever interrupts for the EUSART module.
+ *     - STD_ON: Enable reciever interrupts.
+ *     - STD_OFF: Disable reciever interrupts.
+ */
+#define INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE         STD_ON
 
 #endif	/* _INTERRUPTS_CONFIG_H_ */
 

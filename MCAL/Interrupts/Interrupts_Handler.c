@@ -26,7 +26,23 @@ void __interrupt(low_priority) LowPriorityInterruptHandler(void)
 #elif (INTERRUPTS_PRIORITY_FEATURE == STD_OFF)
 
 void __interrupt() InterruptHandler(void)
-{
+{   
+    #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
+    #if (INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE == STD_ON)
+    if (INTI_EUSART_RxFlag())
+    {
+        EUSART_RX_ISR();
+    }
+    #endif
+
+    #if (INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE == STD_ON)
+    if (INTI_EUSART_TxFlag())
+    {
+        EUSART_TX_ISR();
+    }
+    #endif
+    #endif
+
     #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
     if (EXTI_INT0_Flag())
     {
@@ -94,14 +110,14 @@ void __interrupt() InterruptHandler(void)
     }
     #endif
 
-    #if (INTERRUPTS_ADC_INTERRUPTS_FEAUTURE == STD_ON)
+    #if (INTERRUPTS_ADC_INTERRUPTS_FEATURE == STD_ON)
     if (INTI_ADC_PrivFlag())
     {
         ADC_ISR();
     }
     #endif
 
-    #if (INTERRUPTS_TIMER0_INTERRUPTS_FEAUTURE == STD_ON)
+    #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
     if (INTI_TIMER0_PrivFlag())
     {
         TIMER0_ISR();

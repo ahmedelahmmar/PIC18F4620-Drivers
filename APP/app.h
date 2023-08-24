@@ -13,6 +13,7 @@
 #include "../MCAL/EEPROM/EEPROM.h"
 #include "../MCAL/ADC/ADC.h"
 #include "../MCAL/Timers/TIMER0/TIMER0.h"
+#include "../MCAL/EUSART/EUSART.h"
 
 #include "../ECUAL/LED/LED.h"
 #include "../ECUAL/PushButton/PushButton.h"

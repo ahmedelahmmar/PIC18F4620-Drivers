@@ -7,52 +7,48 @@
 
 #include "app.h"
 
-LED_InitTypeDef LED1 = {
-    .Channel.Pin = GPIO_PIN0,
-    .Channel.Port = GPIO_PORTC,
-    .Configuration = LED_ACTIVE_HIGH,
-    .Status = LED_OFF
+void RxHandler(void);
+
+EUSART_InitTypeDef UART = {
+    .RxInterruptHandler = RxHandler,
+    .Mode = EUSART_MODE_TXRX,
+    .Parity = EUSART_NO_PARITY,
+    .BrgResolution = EUSART_BRG_RESOLUTION_16BIT,
+    .BrgSpeed = EUSART_BRG_SPEED_HIGH,
+    .RxDataFrame = EUSART_RX_DATA_FRAME_8BIT,
+    .TxDataFrame = EUSART_TX_DATA_FRAME_8BIT,
 };
 
-void T0_Handler(void);
+volatile Std_ReturnType Status = E_OK;
+volatile uint8 string[9] = {0};
 
-TIMER0_InitTypeDef T0 = {
-    .InterruptHandler = T0_Handler,
-    .Mode = TIMER0_MODE_TIMER,
-    .Resolution = TIMER0_RESOLUTION_8BIT,
-    .Prescaler = TIMER0_PRESCALER_16,
-};
-
-volatile Std_ReturnType Status = E_OK; 
 int main(void)
 {   
+#if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    INTERRUPTS_EnableAllHighPriorityInterrupts();
+    INTERRUPTS_EnableAllLowPriorityInterrupts();
+#else
     INTERRUPTS_EnableAllGlobalInterrupts();
     INTERRUPTS_EnableAllPeripheralInterrupts();
+#endif 
 
-    LED_Init(&LED1);
-    TIMER0_Init(&T0);
-    TIMER0_StartTimer(&T0, 1);
-    
+    Status |= EUSART_Init(&UART, 9600);
+
     while (TRUE)
     {
-        
+ 
     }
 
     return Status;
 }
 
-void T0_Handler(void)
+void RxHandler(void)
 {
-    static uint8 counter = 0;
-    counter++;
-    if (counter <= 75)
-    {
-        LED_TurnOn(&LED1);
-    }
-    else if (counter < 100)
-    {
-        LED_TurnOff(&LED1);
-    }
-    else counter = 0;
+    EUSART_ReadStringBlocking(&UART, string, 9);
 
+    for (uint8 i = 0; string[i]; ++i)
+    {
+        EUSART_SendDataFrameBlocking(&UART, string[i]);
+    }
+    EUSART_SendDataFrameBlocking(&UART, '\n');
 }
