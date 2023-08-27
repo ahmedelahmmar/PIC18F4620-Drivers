@@ -1,5 +1,5 @@
 COMPILER := /mnt/c/Program\ Files/Microchip/xc8/v2.41/bin/xc8-cc.exe
-COMPILER_FLAGS := -O0 -std=c99 -fasmfile -mcpu=18f4620 -mdebugger=none -memi=wordwrite -maddrqual=ignore -mdfp=C:\\Program\ Files\\Microchip\\MPLABX\\v6.10\\packs\\Microchip\\PIC18Fxxxx_DFP\\1.4.151\\xc8 -msummary=-psect,-class,+mem,-hex,-file -mstack=compiled:auto:auto:auto -mno-default-config-bits -mwarn=0 -gcoff -ginhx32 -Wa,-a -Wl,--data-init -fno-short-double -fno-short-float
+COMPILER_FLAGS := -O0 -std=c99 -mcpu=18f4620 -fasmfile -mdebugger=none -memi=wordwrite -maddrqual=ignore -mdfp=C:\\Program\ Files\\Microchip\\MPLABX\\v6.10\\packs\\Microchip\\PIC18Fxxxx_DFP\\1.4.151\\xc8 -msummary=-psect,-class,+mem,-hex,-file -mstack=compiled:auto:auto:auto -mno-default-config-bits -mwarn=0 -gcoff -ginhx32 -Wa,-a -Wl,--data-init -fno-short-double -fno-short-float
 
 TARGET_FILENAME := pic18f4620
 

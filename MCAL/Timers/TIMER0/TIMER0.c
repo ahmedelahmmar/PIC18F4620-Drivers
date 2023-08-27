@@ -208,13 +208,10 @@ static Std_ReturnType TIMER0_ConfigMode(const TIMER0_InitTypeDef * const InitPtr
     {
         TIMER0_PrivConfigMode(InitPtr->Mode);
 
-        if ((InitPtr->EdgeSelect < TIMER0_SOURCE_EDGE_LIMIT) && (TIMER0_MODE_COUNTER == InitPtr->Mode))
+        if ((TIMER0_MODE_COUNTER == InitPtr->Mode))
         {
-            TIMER0_PrivConfigSourceEdge(InitPtr->EdgeSelect);
-        }
-        else 
-        {
-            loc_ret = E_NOT_OK;
+            if ((InitPtr->EdgeSelect < TIMER0_SOURCE_EDGE_LIMIT)) TIMER0_PrivConfigSourceEdge(InitPtr->EdgeSelect);
+            else { loc_ret = E_NOT_OK; }
         }
     }
     else 

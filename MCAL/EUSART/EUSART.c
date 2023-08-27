@@ -288,7 +288,7 @@ Std_ReturnType EUSART_ReadStringBlocking(const EUSART_InitTypeDef * const InitPt
                             DataBufferPtr[loc_charCounter++] = loc_buffer;
                         }          
                     }
-                    while ((loc_buffer != ENTER) && (loc_charCounter < (maxLen - 1)));
+                    while ((loc_buffer != ENTER) && (loc_charCounter < maxLen));
                     DataBufferPtr[loc_charCounter] = '\0';
 
                     break;  
