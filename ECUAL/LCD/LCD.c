@@ -309,49 +309,49 @@ static void LCD_intToString(sint32 Data, uint8 * const buffer)
     uint8 i = 0;
     boolean isNegative = 0;
     
-    if (Data == 0) {
+    if (0 == Data) 
+    {
         buffer[i++] = '0';
         buffer[i] = '\0';
+
         return;
     }
     
-    if (Data < 0) {
+    if (Data < 0) 
+    {
         isNegative = 1;
         Data = -Data;
     }
     
-    while (Data > 0) {
+    while (Data > 0) 
+    {
         buffer[i++] = ((Data % 10) + '0');
         Data /= 10;
     }
     
-    if (isNegative) {
-        buffer[i++] = '-';
-    }
-    
+    if (isNegative) buffer[i++] = '-';
+
     buffer[i] = '\0';
     
     LCD_reverseString(buffer, i);
 }
 
 static void LCD_floatToString(float32 Data, uint8 * const buffer, uint8 precision) 
-{
-    float32 fracPart = Data - (uint32)Data;
+{   
+    sint32 intPart = (sint32)Data;
+    float32 fracPart = Data - intPart;
 
-    LCD_intToString((sint32)Data, buffer);
+    LCD_intToString(intPart, buffer);
 
     uint8 i = 0;
-    while (buffer[++i] && buffer[0]); 
+    while (buffer[++i]); 
 
     if (precision > 0) 
     {
         buffer[i++] = '.';
 
-        while (precision-- > 0) 
-        {
-            fracPart *= 10;
-        }
-    }
+        while (precision-- > 0) fracPart *= 10;
 
-    LCD_intToString((fracPart < 0) ? -(sint32)fracPart : (sint32)fracPart, (buffer + i));
+        LCD_intToString((fracPart < 0) ? -(sint32)fracPart : (sint32)fracPart, (buffer + i));
+    }
 }

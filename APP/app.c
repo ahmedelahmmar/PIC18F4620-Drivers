@@ -88,7 +88,7 @@ int main(void)
     APP_ErrorStatus |= APP_DCMOTOR_Init(&APP_DcMotor);   
 
     APP_ErrorStatus |= LCD_ClearRow(&LCD, 0);  
-    APP_ErrorStatus |= LCD_WriteFloat(&LCD, -123.456, 3);
+    APP_ErrorStatus |= LCD_WriteFloat(&LCD, -123.456, 0);
 
     APP_ErrorStatus |= LCD_ClearRow(&LCD, 1);  
     APP_ErrorStatus |= LCD_WriteInt(&LCD, -69696969);   
