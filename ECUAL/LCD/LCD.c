@@ -232,21 +232,17 @@ Std_ReturnType LCD_ClearRow(const LCD_InitTypeDef * const InitPtr, const uint8 R
 {
     Std_ReturnType loc_ret = E_OK;
 
-    if (NULL_PTR != InitPtr)
+    if ((NULL_PTR != InitPtr) && (Row < InitPtr->Display.Rows))
     {
-        if (Row < InitPtr->Display.Rows)
-        {
-            loc_ret |= LCD_SetCursor(InitPtr, Row, 0);
+        loc_ret |= LCD_SetCursor(InitPtr, Row, 0);
 
-            uint8 buffer[17];
-            
-            for (uint8 i = 0; i < InitPtr->Display.Columns; ++i) buffer[i] = 0x20;
-            buffer[InitPtr->Display.Columns] = '\0';
+        uint8 buffer[40];
+        
+        for (uint8 i = 0; i < InitPtr->Display.Columns; ++i) buffer[i] = 0x20;
+        buffer[InitPtr->Display.Columns] = '\0';
 
-            loc_ret |= LCD_WriteString(InitPtr, buffer);
-            loc_ret |= LCD_SetCursor(InitPtr, Row, 0);
-        }
-        else { loc_ret = E_NOT_OK; }
+        loc_ret |= LCD_WriteString(InitPtr, buffer);
+        loc_ret |= LCD_SetCursor(InitPtr, Row, 0);
     }
     else
     {
