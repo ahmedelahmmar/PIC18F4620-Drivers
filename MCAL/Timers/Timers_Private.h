@@ -25,18 +25,22 @@
 #include "../mcu_registers.h"
 #include "../mcu_config.h"
 
-#define __TIMER0_Enable()                         (T0CONbits.TMR0ON = 1)
-#define __TIMER0_Disable()                        (T0CONbits.TMR0ON = 0)
-        
-#define __TIMER0_ConfigResolution(x)              (T0CONbits.T08BIT = x) 
-#define __TIMER0_ConfigMode(x)                    (T0CONbits.T0CS = x)
-#define __TIMER0_ConfigSourceEdge(x)              (T0CONbits.T0SE = x)
-#define __TIMER0_ConfigPrescaler(x)               (T0CONbits.T0PS = x)
-        
-#define __TIMER0_DisablePrescaler()               (T0CONbits.PSA = 1)
-#define __TIMER0_EnablePrescaler()                (T0CONbits.PSA = 0)
-
+#define __TIMER0_Enable()                           (T0CONbits.TMR0ON = 1)
+#define __TIMER0_Disable()                          (T0CONbits.TMR0ON = 0)
+#define __TIMER0_ConfigResolution(x)                (T0CONbits.T08BIT = x) 
+#define __TIMER0_ConfigMode(x)                      (T0CONbits.T0CS = x)
+#define __TIMER0_ConfigSourceEdge(x)                (T0CONbits.T0SE = x)
+#define __TIMER0_ConfigPrescaler(x)                 (T0CONbits.T0PS = x)
+#define __TIMER0_DisablePrescaler()                 (T0CONbits.PSA = 1)
+#define __TIMER0_EnablePrescaler()                  (T0CONbits.PSA = 0)
 #define __TIMER0_CounterRegisterLow()               (TMR0L)
-#define __TIMER0_CounterRegisterHigh()             (TMR0H)
+#define __TIMER0_CounterRegisterHigh()              (TMR0H)
+
+#define __TIMER1_Enable()                           (T1CONbits.TMR1ON = 1)
+#define __TIMER1_Disable()                          (T1CONbits.TMR1ON = 0)       
+#define __TIMER1_ConfigMode(x)                      (T1CONbits.TMR1CS = x)
+#define __TIMER1_ConfigPrescaler(x)                 (T1CONbits.T1CKPS = x)     
+#define __TIMER1_CounterRegisterLow()               (TMR1L)
+#define __TIMER1_CounterRegisterHigh()              (TMR1H)
 
 #endif /* _TIMERS_PRIVATE_H_ */

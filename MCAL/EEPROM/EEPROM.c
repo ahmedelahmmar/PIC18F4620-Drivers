@@ -51,15 +51,15 @@ Std_ReturnType EEPROM_WriteByte(const uint16 loc_address, const uint8 loc_data)
 
     EEPROM_EnableWriting();
 
-    uint8 loc_globalInterruptsStatus = INTERRUPTS_GlobalInterruptsFlag;
-    INTERRUPTS_DisableAllGlobalInterrupts();
+    uint8 loc_globalInterruptsStatus = INTI_GetInterruptStatus();
+    INTI_DisableInterrupts();
 
     // Critical Section
     EEPROM_InitPreWritingSequence();
     EEPROM_Write();
     while (EEPROM_isWriting());
 
-    INTERRUPTS_GlobalInterruptsFlag = loc_globalInterruptsStatus;
+    INTI_SetInterruptStatus(loc_globalInterruptsStatus);
 
     EEPROM_DisableWriting();
 

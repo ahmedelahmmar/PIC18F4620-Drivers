@@ -155,8 +155,8 @@
     #endif
 #endif
 
-#define __INTI_TIMER0_ClearFlag()                         (INTCONbits.TMR0IF = 0)    
-#define __INTI_TIMER0_Flag()                              (INTCONbits.TMR0IF)  
+#define __INTI_TIMER0_ClearFlag()                                   (INTCONbits.TMR0IF = 0)    
+#define __INTI_TIMER0_Flag()                                        (INTCONbits.TMR0IF)  
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 
@@ -172,26 +172,43 @@
     #endif
 #endif
 
-#define __INTI_EUSART_TxFlag()                            (PIR1bits.TXIF)
-#define __INTI_EUSART_RxFlag()                            (PIR1bits.RCIF)
+#define __INTI_TIMER1_ClearFlag()                                   (PIR1bits.TMR1IF = 0)    
+#define __INTI_TIMER1_Flag()                                        (PIR1bits.TMR1IF)  
+
+#if (INTERRUPTS_TIMER1_INTERRUPTS_FEATURE == STD_ON)
+
+#define __INTI_TIMER1_EnableInterrupt()                             (PIE1bits.TMR1IE = 1)
+#define __INTI_TIMER1_DisableInterrupt()                            (PIE1bits.TMR1IE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define __INTI_TIMER1_SetAsHighPriority()                       (IPR1bits.TMR1IP = 1)
+    #define __INTI_TIMER1_SetAsLowPriority()                        (IPR1bits.TMR1IP = 0)
+    #define __INTI_TIMER1_DeInitPriority()                          (__INTI_TIMER1_SetAsLowPriority())
+
+    #endif
+#endif
+
+#define __INTI_EUSART_TxFlag()                                      (PIR1bits.TXIF)
+#define __INTI_EUSART_RxFlag()                                      (PIR1bits.RCIF)
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
 
-#define __INTI_EUSART_EnableTxInterrupt()                 (PIE1bits.TXIE = 1)
-#define __INTI_EUSART_DisableTxInterrupt()                (PIE1bits.TXIE = 0)
+#define __INTI_EUSART_EnableTxInterrupt()                           (PIE1bits.TXIE = 1)
+#define __INTI_EUSART_DisableTxInterrupt()                          (PIE1bits.TXIE = 0)
 
-#define __INTI_EUSART_EnableRxInterrupt()                 (PIE1bits.RCIE = 1)
-#define __INTI_EUSART_DisableRxInterrupt()                (PIE1bits.RCIE = 0)
+#define __INTI_EUSART_EnableRxInterrupt()                           (PIE1bits.RCIE = 1)
+#define __INTI_EUSART_DisableRxInterrupt()                          (PIE1bits.RCIE = 0)
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON) 
 
-    #define __INTI_EUSART_SetTxAsHighPriority()           (IPR1bits.TXIP = 1)
-    #define __INTI_EUSART_SetTxAsLowPriority()            (IPR1bits.TXIP = 0)
+    #define __INTI_EUSART_SetTxAsHighPriority()                     (IPR1bits.TXIP = 1)
+    #define __INTI_EUSART_SetTxAsLowPriority()                      (IPR1bits.TXIP = 0)
 
-    #define __INTI_EUSART_SetRxAsHighPriority()           (IPR1bits.RCIP = 1)
-    #define __INTI_EUSART_SetRxAsLowPriority()            (IPR1bits.RCIP = 0)
+    #define __INTI_EUSART_SetRxAsHighPriority()                     (IPR1bits.RCIP = 1)
+    #define __INTI_EUSART_SetRxAsLowPriority()                      (IPR1bits.RCIP = 0)
 
-    #define __INTI_EUSART_DeInitTxPriority()              (__INTI_EUSART_SetTxAsLowPriority())
-    #define __INTI_EUSART_DeInitRxPriority()              (__INTI_EUSART_SetRxAsLowPriority())
+    #define __INTI_EUSART_DeInitTxPriority()                        (__INTI_EUSART_SetTxAsLowPriority())
+    #define __INTI_EUSART_DeInitRxPriority()                        (__INTI_EUSART_SetRxAsLowPriority())
 
     #endif
 #endif
@@ -223,6 +240,10 @@ void ADC_ISR(void);
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 void TIMER0_ISR(void);
+#endif
+
+#if (INTERRUPTS_TIMER1_INTERRUPTS_FEATURE == STD_ON)
+void TIMER1_ISR(void);
 #endif
 
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)

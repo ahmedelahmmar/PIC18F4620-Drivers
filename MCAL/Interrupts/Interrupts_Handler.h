@@ -37,4 +37,3 @@ void __interrupt() InterruptHandler(void);
 #endif
 
 #endif	/* _INTERRUPTS_HANDLER_H_ */
-

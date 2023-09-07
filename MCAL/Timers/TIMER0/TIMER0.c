@@ -159,9 +159,9 @@ Std_ReturnType TIMER0_ReadCounterValue(const TIMER0_InitTypeDef * const InitPtr,
 
     if ((NULL_PTR != InitPtr) && (NULL_PTR != DataBufferPtr))
     {
-        *DataBufferPtr = __TIMER0_CounterRegisterLow();
+        *DataBufferPtr = (uint8) __TIMER0_CounterRegisterLow();
         
-        if (TIMER0_RESOLUTION_16BIT == InitPtr->Resolution) *DataBufferPtr |= (__TIMER0_CounterRegisterHigh() << 8);
+        if (TIMER0_RESOLUTION_16BIT == InitPtr->Resolution) *DataBufferPtr |= (uint8)(__TIMER0_CounterRegisterHigh() << 8);
     }
     else 
     {
@@ -336,12 +336,12 @@ static Std_ReturnType TIMER0_SetPreload(const TIMER0_InitTypeDef * const InitPtr
     switch (InitPtr->Resolution)
     {
         case TIMER0_RESOLUTION_8BIT:
-            __TIMER0_CounterRegisterLow() = (uint8)(loc_preload & 0xFF);
+            __TIMER0_CounterRegisterLow()  = (uint8)(loc_preload & 0xFF);
             break;
 
         case TIMER0_RESOLUTION_16BIT:
             __TIMER0_CounterRegisterHigh() = (uint8)(loc_preload >> 8);
-            __TIMER0_CounterRegisterLow() = (uint8)(loc_preload & 0xFF);
+            __TIMER0_CounterRegisterLow()  = (uint8)(loc_preload & 0xFF);
             break;
 
         default:

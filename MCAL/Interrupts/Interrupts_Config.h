@@ -55,12 +55,20 @@
 #define INTERRUPTS_ADC_INTERRUPTS_FEATURE              STD_OFF
 
 /**
- * @def INTERRUPTS_ADC_INTERRUPTS_FEATURE
+ * @def INTERRUPTS_TIMER0_INTERRUPTS_FEATURE
  * @brief Control macro to enable or disable the interrupts for Timer0.
  *     - STD_ON: Enable Timer0 interrupts.
  *     - STD_OFF: Disable Timer0 interrupts.
  */
 #define INTERRUPTS_TIMER0_INTERRUPTS_FEATURE           STD_ON
+
+/**
+ * @def INTERRUPTS_TIMER1_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the interrupts for Timer1.
+ *     - STD_ON: Enable Timer1 interrupts.
+ *     - STD_OFF: Disable Timer1 interrupts.
+ */
+#define INTERRUPTS_TIMER1_INTERRUPTS_FEATURE           STD_ON
 
 /**
  * @def INTERRUPTS_EUSART_INTERRUPTS_FEATURE
