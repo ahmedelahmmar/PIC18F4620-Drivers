@@ -1,7 +1,7 @@
 /**
  * @file TIMER0.c
  * @author Ahmed Alaa (4hmedalaa@gmail.com)
- * @version 0.1
+ * @version 0.3
  * @date 22.08.23
  */
 
@@ -10,7 +10,7 @@
 
 static uint16 TIMER0_nOverflows = 0;
 static uint16 TIMER0_InitialPreload = 0;
-static const TIMER0_InitTypeDef *TIMER0_ConfigObj = NULL_PTR;
+static const TIMER0_InitTypeDef * TIMER0_ObjBuffer = NULL_PTR;
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 static void (*TIMER0_InterruptHandler)(void) = NULL_PTR;
@@ -38,7 +38,7 @@ Std_ReturnType TIMER0_Init(const TIMER0_InitTypeDef * const InitPtr)
     {   
         __TIMER0_Disable();
 
-        TIMER0_ConfigObj = InitPtr;
+        TIMER0_ObjBuffer = InitPtr;
 
         loc_ret = TIMER0_ConfigResolution(InitPtr);
 
@@ -69,7 +69,7 @@ Std_ReturnType TIMER0_DeInit(const TIMER0_InitTypeDef * const InitPtr)
     if (NULL_PTR != InitPtr)
     {
         __TIMER0_Disable();
-        TIMER0_ConfigObj = NULL_PTR;
+        TIMER0_ObjBuffer = NULL_PTR;
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
         TIMER0_DeInitInterruptHandler();
@@ -137,7 +137,23 @@ Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr)
     return loc_ret;
 }
 
-Std_ReturnType TIMER0_GetCounterValue(const TIMER0_InitTypeDef * const InitPtr, uint16 * const DataBufferPtr)
+Std_ReturnType TIMER0_WriteCounterValue(const TIMER0_InitTypeDef * const InitPtr, const uint16 CounterValue)
+{
+    Std_ReturnType loc_ret = E_OK;
+
+    if (NULL_PTR != InitPtr)
+    {
+        loc_ret = TIMER0_SetPreload(InitPtr, CounterValue);
+    }
+    else 
+    {
+        loc_ret = E_NOT_OK;
+    }
+
+    return loc_ret;
+}
+
+Std_ReturnType TIMER0_ReadCounterValue(const TIMER0_InitTypeDef * const InitPtr, uint16 * const DataBufferPtr)
 {
     Std_ReturnType loc_ret = E_OK;
 
@@ -340,15 +356,15 @@ void TIMER0_ISR(void)
 {
     INTI_TIMER0_ClearFlag();
 
-    static uint32 overflowCounter = 0;
+    static uint16 overflowCounter;
 
     if ((NULL_PTR != TIMER0_InterruptHandler) && (overflowCounter++ == TIMER0_nOverflows))
     {
-        TIMER0_SetPreload(TIMER0_ConfigObj, TIMER0_InitialPreload);
+        TIMER0_SetPreload(TIMER0_ObjBuffer, TIMER0_InitialPreload);
+
+        overflowCounter = 0;
 
         TIMER0_InterruptHandler();
-        
-        overflowCounter = 0;
     }
 }
 #endif

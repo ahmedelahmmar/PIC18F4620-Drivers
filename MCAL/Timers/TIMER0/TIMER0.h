@@ -14,7 +14,7 @@
  * @note The TIMER0 interface supports accurate timekeeping and timing-related tasks across different
  *       microcontroller families and development environments.
  * 
- * @version 0.1
+ * @version 0.3
  * @date 22.08.23
  */
 
@@ -150,6 +150,41 @@ Std_ReturnType TIMER0_StartTimer(const TIMER0_InitTypeDef * const InitPtr, const
  */
 Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr);
 
-Std_ReturnType TIMER0_GetCounterValue(const TIMER0_InitTypeDef * const InitPtr, uint16 * const DataBufferPtr);
+/**
+ * @brief Write a new value to the TIMER0 counter register.
+ *
+ * This function writes a new value to the TIMER0 counter register, effectively updating the current count value.
+ * It utilizes the configuration provided in the @param InitPtr parameter to manage the counter value update.
+ *
+ * @param InitPtr Pointer to the TIMER0 initialization structure containing configuration parameters.
+ * @param CounterValue The new value to be written to the TIMER0 counter register.
+ * @return Std_ReturnType Error status indicating the success of writing the counter value.
+ *     - E_OK: The counter value was written successfully.
+ *     - E_NOT_OK: An error occurred during counter value update (e.g., invalid configuration or value).
+ *
+ * @note This function allows you to manually set a new value to the TIMER0 counter register.
+ * @note The @param InitPtr parameter should point to a valid TIMER0_InitTypeDef structure used for TIMER0 configuration.
+ * @note The @param CounterValue parameter specifies the new value to be written to the TIMER0 counter register.
+ */
+Std_ReturnType TIMER0_WriteCounterValue(const TIMER0_InitTypeDef * const InitPtr, const uint16 CounterValue);
+
+/**
+ * @brief Read the current value of the TIMER0 counter register.
+ *
+ * This function reads the current value of the TIMER0 counter register and stores it in the provided data buffer
+ * pointed to by @param DataBufferPtr. It utilizes the configuration provided in the @param InitPtr parameter to manage
+ * the counter value retrieval.
+ *
+ * @param InitPtr Pointer to the TIMER0 initialization structure containing configuration parameters.
+ * @param DataBufferPtr Pointer to a variable where the current TIMER0 counter value will be stored.
+ * @return Std_ReturnType Error status indicating the success of reading the counter value.
+ *     - E_OK: The counter value was read successfully.
+ *     - E_NOT_OK: An error occurred during counter value retrieval (e.g., invalid configuration or buffer pointer).
+ *
+ * @note This function retrieves and stores the current value of the TIMER0 counter register in the provided buffer.
+ * @note The @param InitPtr parameter should point to a valid TIMER0_InitTypeDef structure used for TIMER0 configuration.
+ * @note The @param DataBufferPtr parameter should be a pointer to a variable where the counter value will be stored.
+ */
+Std_ReturnType TIMER0_ReadCounterValue(const TIMER0_InitTypeDef * const InitPtr, uint16 * const DataBufferPtr);
 
 #endif /* _TIMER0_H_ */
