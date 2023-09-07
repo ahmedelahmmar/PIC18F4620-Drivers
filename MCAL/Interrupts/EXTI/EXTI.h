@@ -21,9 +21,8 @@
 #ifndef _EXTI_H_
 #define	_EXTI_H_
 
-#include "../../MCAL/GPIO/GPIO.h"
-
-#include "Interrupts_Config.h"
+#include "../../GPIO/GPIO.h"
+#include "../Interrupts_Config.h"
 
 #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
 typedef enum

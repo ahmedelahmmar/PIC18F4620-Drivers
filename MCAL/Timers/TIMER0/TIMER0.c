@@ -36,7 +36,7 @@ Std_ReturnType TIMER0_Init(const TIMER0_InitTypeDef * const InitPtr)
 
     if (NULL_PTR != InitPtr)
     {   
-        TIMER0_PrivDisable();
+        __TIMER0_Disable();
 
         TIMER0_ConfigObj = InitPtr;
 
@@ -68,7 +68,7 @@ Std_ReturnType TIMER0_DeInit(const TIMER0_InitTypeDef * const InitPtr)
 
     if (NULL_PTR != InitPtr)
     {
-        TIMER0_PrivDisable();
+        __TIMER0_Disable();
         TIMER0_ConfigObj = NULL_PTR;
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
@@ -100,7 +100,7 @@ Std_ReturnType TIMER0_StartTimer(const TIMER0_InitTypeDef * const InitPtr, const
         INTI_TIMER0_ClearFlag();
         INTI_TIMER0_EnableInterrupt();
 #endif
-        TIMER0_PrivEnable();
+        __TIMER0_Enable();
     }
     else 
     {
@@ -127,7 +127,7 @@ Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr)
         INTI_TIMER0_ClearFlag();
         INTI_TIMER0_EnableInterrupt();
 #endif
-        TIMER0_PrivEnable();
+        __TIMER0_Enable();
     }
     else
     {
@@ -137,8 +137,25 @@ Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr)
     return loc_ret;
 }
 
-#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
+Std_ReturnType TIMER0_GetCounterValue(const TIMER0_InitTypeDef * const InitPtr, uint16 * const DataBufferPtr)
+{
+    Std_ReturnType loc_ret = E_OK;
 
+    if ((NULL_PTR != InitPtr) && (NULL_PTR != DataBufferPtr))
+    {
+        *DataBufferPtr = __TIMER0_CounterRegisterLow();
+        
+        if (TIMER0_RESOLUTION_16BIT == InitPtr->Resolution) *DataBufferPtr |= (__TIMER0_CounterRegisterHigh() << 8);
+    }
+    else 
+    {
+        loc_ret = E_NOT_OK;
+    }
+
+    return loc_ret;
+}
+
+#if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 static Std_ReturnType TIMER0_InitInterruptHandler(const TIMER0_InitTypeDef * const InitPtr)
 {
     Std_ReturnType loc_ret = E_OK;
@@ -190,7 +207,7 @@ static Std_ReturnType TIMER0_ConfigResolution(const TIMER0_InitTypeDef * const I
 
     if (InitPtr->Resolution < TIMER0_RESOLUTION_LIMIT)
     {
-        TIMER0_PrivConfigResolution(InitPtr->Resolution);
+        __TIMER0_ConfigResolution(InitPtr->Resolution);
     }
     else 
     {
@@ -206,11 +223,11 @@ static Std_ReturnType TIMER0_ConfigMode(const TIMER0_InitTypeDef * const InitPtr
 
     if (InitPtr->Mode < TIMER0_MODE_LIMIT)
     {
-        TIMER0_PrivConfigMode(InitPtr->Mode);
+        __TIMER0_ConfigMode(InitPtr->Mode);
 
         if ((TIMER0_MODE_COUNTER == InitPtr->Mode))
         {
-            if ((InitPtr->EdgeSelect < TIMER0_SOURCE_EDGE_LIMIT)) TIMER0_PrivConfigSourceEdge(InitPtr->EdgeSelect);
+            if ((InitPtr->EdgeSelect < TIMER0_SOURCE_EDGE_LIMIT)) __TIMER0_ConfigSourceEdge(InitPtr->EdgeSelect);
             else { loc_ret = E_NOT_OK; }
         }
     }
@@ -230,12 +247,12 @@ static Std_ReturnType TIMER0_ConfigPrescaler(const TIMER0_InitTypeDef * const In
     {
         if (TIMER0_NO_PRESCALER == InitPtr->Prescaler)
         {
-            TIMER0_PrivDisablePrescaler();
+            __TIMER0_DisablePrescaler();
         }
         else
         {
-            TIMER0_PrivConfigPrescaler(InitPtr->Prescaler);
-            TIMER0_PrivEnablePrescaler();
+            __TIMER0_ConfigPrescaler(InitPtr->Prescaler);
+            __TIMER0_EnablePrescaler();
         }
     }
     else 
@@ -252,15 +269,17 @@ static Std_ReturnType TIMER0_ConfigTimerDelay(const TIMER0_InitTypeDef * const I
 
     if ((InitPtr->Prescaler < TIMER0_PRESCALER_LIMIT) || (TIMER0_NO_PRESCALER == InitPtr->Prescaler))
     {
-        uint8 loc_TickTime_us = 0;
+        uint16 loc_TickTime_us = 0;
+
+        // FOSC/4 is the default clock for TIMER0 even with the prescaler disabled.
 
         if (TIMER0_NO_PRESCALER == InitPtr->Prescaler)
         {
-            loc_TickTime_us = (uint8)(4 / (uint32)(FOSC / 1000000UL));
+            loc_TickTime_us = (uint16)(4 / (uint32)(FOSC / 1000000UL));
         }
         else
         {
-            loc_TickTime_us = (uint8)(((uint16)(2 << InitPtr->Prescaler) * 4) / (uint32)(FOSC / 1000000UL));
+            loc_TickTime_us = (uint16)(((uint16)(2 << InitPtr->Prescaler) * 4) / (uint32)(FOSC / 1000000UL));
         }
 
         uint32 loc_TotalTicks = ((loc_delay_ms * 1000U) / loc_TickTime_us);
@@ -291,19 +310,22 @@ static Std_ReturnType TIMER0_ConfigTimerDelay(const TIMER0_InitTypeDef * const I
     return loc_ret;
 }
 
-static Std_ReturnType TIMER0_SetPreload(const TIMER0_InitTypeDef * const InitPtr, const uint16 loc_preload)
+static Std_ReturnType TIMER0_SetPreload(const TIMER0_InitTypeDef * const InitPtr, uint16 loc_preload)
 {
     Std_ReturnType loc_ret = E_OK;
+
+    // Writing to TIMER0 counter register inhibits its operation for 2 clock cycles.
+    loc_preload += 2;
 
     switch (InitPtr->Resolution)
     {
         case TIMER0_RESOLUTION_8BIT:
-            TIMER0_PrivCounterRegisterLow = (uint8)(loc_preload & 0xFF);
+            __TIMER0_CounterRegisterLow() = (uint8)(loc_preload & 0xFF);
             break;
 
         case TIMER0_RESOLUTION_16BIT:
-            TIMER0_PrivCounterRegisterHigh = (uint8)(loc_preload >> 8);
-            TIMER0_PrivCounterRegisterLow = (uint8)(loc_preload & 0xFF);
+            __TIMER0_CounterRegisterHigh() = (uint8)(loc_preload >> 8);
+            __TIMER0_CounterRegisterLow() = (uint8)(loc_preload & 0xFF);
             break;
 
         default:
@@ -322,9 +344,10 @@ void TIMER0_ISR(void)
 
     if ((NULL_PTR != TIMER0_InterruptHandler) && (overflowCounter++ == TIMER0_nOverflows))
     {
+        TIMER0_SetPreload(TIMER0_ConfigObj, TIMER0_InitialPreload);
+
         TIMER0_InterruptHandler();
         
-        TIMER0_SetPreload(TIMER0_ConfigObj, TIMER0_InitialPreload);
         overflowCounter = 0;
     }
 }

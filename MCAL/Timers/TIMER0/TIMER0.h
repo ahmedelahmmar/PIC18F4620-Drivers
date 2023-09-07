@@ -150,4 +150,6 @@ Std_ReturnType TIMER0_StartTimer(const TIMER0_InitTypeDef * const InitPtr, const
  */
 Std_ReturnType TIMER0_StartCounter(const TIMER0_InitTypeDef * const InitPtr);
 
+Std_ReturnType TIMER0_GetCounterValue(const TIMER0_InitTypeDef * const InitPtr, uint16 * const DataBufferPtr);
+
 #endif /* _TIMER0_H_ */

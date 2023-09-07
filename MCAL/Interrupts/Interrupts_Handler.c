@@ -111,14 +111,14 @@ void __interrupt() InterruptHandler(void)
     #endif
 
     #if (INTERRUPTS_ADC_INTERRUPTS_FEATURE == STD_ON)
-    if (INTI_ADC_PrivFlag())
+    if (INTI_ADC_Flag())
     {
         ADC_ISR();
     }
     #endif
 
     #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
-    if (INTI_TIMER0_PrivFlag())
+    if (INTI_TIMER0_Flag())
     {
         TIMER0_ISR();
     }

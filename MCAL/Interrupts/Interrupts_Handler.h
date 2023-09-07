@@ -21,7 +21,7 @@
 #ifndef _INTERRUPTS_HANDLER_H_
 #define	_INTERRUPTS_HANDLER_H_
 
-#include "EXTI.h"
+#include "EXTI/EXTI.h"
 
 #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
 

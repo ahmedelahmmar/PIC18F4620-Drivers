@@ -19,7 +19,7 @@
 #ifndef _MCU_CONFIG_H_
 #define	_MCU_CONFIG_H_
 
-#define _XTAL_FREQ          16000000UL
+#define _XTAL_FREQ          8000000UL
 #define FOSC                _XTAL_FREQ
 
 #define NUMBER_OF_PORTS             5

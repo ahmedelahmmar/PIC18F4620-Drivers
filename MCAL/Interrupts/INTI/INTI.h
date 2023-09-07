@@ -21,8 +21,12 @@
 #ifndef _INTI_H_
 #define _INTI_H_
 
-#include "Interrupts_Config.h"
-#include "EXTI.h"
+#include "../EXTI/EXTI.h"
+
+void INTI_EnableInterrupts(void);
+void INTI_DisableInterrupts(void);
+uint8 INTI_GetInterruptStatus(void);
+void INTI_SetInterruptStatus(uint8 Status);
 
 #if ((INTERRUPTS_ADC_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_ADC_INTERRUPTS_FEATURE != STD_OFF))
 #warning "'INTERRUPTS_ADC_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"

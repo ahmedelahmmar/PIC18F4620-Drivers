@@ -23,11 +23,37 @@
 #ifndef _INTERRUPTS_PRIVATE_H_
 #define	_INTERRUPTS_PRIVATE_H_
 
-#include "../mcu_config.h"
-#include "Interrupts_Config.h"
 #include "../../lib/compiler.h"
+#include "../mcu_config.h"
 #include "../mcu_registers.h"
-#include "INTI.h"
+
+#include "Interrupts_Config.h"
+#include "INTI/INTI.h"
+
+#define INTERRUPTS_GlobalInterruptsFlag()                      (INTCONbits.GIE)
+
+#if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+#define INTERRUPTS_EnablePriorityFeature()                   (RCONbits.IPEN = 1)
+#define INTERRUPTS_DisablePriorityFeature()                  (RCONbits.IPEN = 0)
+
+#define INTERRUPTS_EnableAllHighPriorityInterrupts()         (INTCONbits.GIEH = 1)
+#define INTERRUPTS_DisableAllHighPriorityInterrupts()        (INTCONbits.GIEH = 0)
+
+#define INTERRUPTS_EnableAllLowPriorityInterrupts()          (INTCONbits.GIEL = 1)
+#define INTERRUPTS_DisableAllLowPriorityInterrupts()         (INTCONbits.GIEL = 0)
+
+#elif (INTERRUPTS_PRIORITY_FEATURE == STD_OFF)
+
+#define INTERRUPTS_EnableAllGlobalInterrupts()               (INTCONbits.GIE = 1)
+#define INTERRUPTS_DisableAllGlobalInterrupts()              (INTCONbits.GIE = 0)
+
+#define INTERRUPTS_EnableAllPeripheralInterrupts()           (INTCONbits.PEIE = 1)
+#define INTERRUPTS_DisableAllPeripheralInterrupts()          (INTCONbits.PEIE = 0)
+
+#else
+#warning "'INTERRUPTS_PRIORITY_FEATURE' not configured in Interrupts_Config.h"
+#endif
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
 
@@ -112,60 +138,60 @@
     #endif
 #endif
 
-#define INTI_ADC_PrivClearFlag()                            (PIR1bits.ADIF = 0)    
-#define INTI_ADC_PrivFlag()                                 (PIR1bits.ADIF)
+#define __INTI_ADC_ClearFlag()                            (PIR1bits.ADIF = 0)    
+#define __INTI_ADC_Flag()                                 (PIR1bits.ADIF)
 
 #if (INTERRUPTS_ADC_INTERRUPTS_FEATURE == STD_ON)
 
-#define INTI_ADC_PrivEnableInterrupt()              (PIE1bits.ADIE = 1)
-#define INTI_ADC_PrivDisableInterrupt()             (PIE1bits.ADIE = 0)
+#define __INTI_ADC_EnableInterrupt()              (PIE1bits.ADIE = 1)
+#define __INTI_ADC_DisableInterrupt()             (PIE1bits.ADIE = 0)
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
 
-    #define INTI_ADC_PrivSetAsHighPriority()        (IPR1bits.ADIP = 1)
-    #define INTI_ADC_PrivSetAsLowPriority()         (IPR1bits.ADIP = 0)
-    #define INTI_ADC_PrivDeInitPriority()           (INTI_ADC_PrivSetAsLowPriority())
+    #define __INTI_ADC_SetAsHighPriority()        (IPR1bits.ADIP = 1)
+    #define __INTI_ADC_SetAsLowPriority()         (IPR1bits.ADIP = 0)
+    #define __INTI_ADC_DeInitPriority()           (__INTI_ADC_SetAsLowPriority())
 
     #endif
 #endif
 
-#define INTI_TIMER0_PrivClearFlag()                         (INTCONbits.TMR0IF = 0)    
-#define INTI_TIMER0_PrivFlag()                              (INTCONbits.TMR0IF)  
+#define __INTI_TIMER0_ClearFlag()                         (INTCONbits.TMR0IF = 0)    
+#define __INTI_TIMER0_Flag()                              (INTCONbits.TMR0IF)  
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
 
-#define INTI_TIMER0_PrivEnableInterrupt()              (INTCONbits.TMR0IE = 1)
-#define INTI_TIMER0_PrivDisableInterrupt()             (INTCONbits.TMR0IE = 0)
+#define __INTI_TIMER0_EnableInterrupt()              (INTCONbits.TMR0IE = 1)
+#define __INTI_TIMER0_DisableInterrupt()             (INTCONbits.TMR0IE = 0)
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
 
-    #define INTI_TIMER0_PrivSetAsHighPriority()        (INTCON2bits.TMR0IP = 1)
-    #define INTI_TIMER0_PrivSetAsLowPriority()         (INTCON2bits.TMR0IP = 0)
-    #define INTI_TIMER0_PrivDeInitPriority()           (INTI_TIMER0_PrivSetAsLowPriority())
+    #define __INTI_TIMER0_SetAsHighPriority()        (INTCON2bits.TMR0IP = 1)
+    #define __INTI_TIMER0_SetAsLowPriority()         (INTCON2bits.TMR0IP = 0)
+    #define __INTI_TIMER0_DeInitPriority()           (__INTI_TIMER0_SetAsLowPriority())
 
     #endif
 #endif
 
-#define INTI_EUSART_PrivTxFlag()                            (PIR1bits.TXIF)
-#define INTI_EUSART_PrivRxFlag()                            (PIR1bits.RCIF)
+#define __INTI_EUSART_TxFlag()                            (PIR1bits.TXIF)
+#define __INTI_EUSART_RxFlag()                            (PIR1bits.RCIF)
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
 
-#define INTI_EUSART_PrivEnableTxInterrupt()                 (PIE1bits.TXIE = 1)
-#define INTI_EUSART_PrivDisableTxInterrupt()                (PIE1bits.TXIE = 0)
+#define __INTI_EUSART_EnableTxInterrupt()                 (PIE1bits.TXIE = 1)
+#define __INTI_EUSART_DisableTxInterrupt()                (PIE1bits.TXIE = 0)
 
-#define INTI_EUSART_PrivEnableRxInterrupt()                 (PIE1bits.RCIE = 1)
-#define INTI_EUSART_PrivDisableRxInterrupt()                (PIE1bits.RCIE = 0)
+#define __INTI_EUSART_EnableRxInterrupt()                 (PIE1bits.RCIE = 1)
+#define __INTI_EUSART_DisableRxInterrupt()                (PIE1bits.RCIE = 0)
 
     #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON) 
 
-    #define INTI_EUSART_PrivSetTxAsHighPriority()           (IPR1bits.TXIP = 1)
-    #define INTI_EUSART_PrivSetTxAsLowPriority()            (IPR1bits.TXIP = 0)
+    #define __INTI_EUSART_SetTxAsHighPriority()           (IPR1bits.TXIP = 1)
+    #define __INTI_EUSART_SetTxAsLowPriority()            (IPR1bits.TXIP = 0)
 
-    #define INTI_EUSART_PrivSetRxAsHighPriority()           (IPR1bits.RCIP = 1)
-    #define INTI_EUSART_PrivSetRxAsLowPriority()            (IPR1bits.RCIP = 0)
+    #define __INTI_EUSART_SetRxAsHighPriority()           (IPR1bits.RCIP = 1)
+    #define __INTI_EUSART_SetRxAsLowPriority()            (IPR1bits.RCIP = 0)
 
-    #define INTI_EUSART_PrivDeInitTxPriority()              (INTI_EUSART_PrivSetTxAsLowPriority())
-    #define INTI_EUSART_PrivDeInitRxPriority()              (INTI_EUSART_PrivSetRxAsLowPriority())
+    #define __INTI_EUSART_DeInitTxPriority()              (__INTI_EUSART_SetTxAsLowPriority())
+    #define __INTI_EUSART_DeInitRxPriority()              (__INTI_EUSART_SetRxAsLowPriority())
 
     #endif
 #endif

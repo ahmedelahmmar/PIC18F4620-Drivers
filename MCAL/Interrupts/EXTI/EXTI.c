@@ -5,7 +5,7 @@
  * @date 01.08.23
  */
 
-#include "Interrupts_Private.h"
+#include "../Interrupts_Private.h"
 #include "EXTI.h"
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
