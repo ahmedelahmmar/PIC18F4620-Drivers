@@ -8,8 +8,8 @@
 #include "../Timers_Private.h"
 #include "TIMER0.h"
 
-static uint16 TIMER0_nOverflows = 0;
-static uint16 TIMER0_InitialPreload = 0;
+static uint16 TIMER0_nRequiredInterrupts = 0;
+static uint16 TIMER0_DelayValue = 0;
 static const TIMER0_InitTypeDef * TIMER0_ObjBuffer = NULL_PTR;
 
 #if (INTERRUPTS_TIMER0_INTERRUPTS_FEATURE == STD_ON)
@@ -303,20 +303,20 @@ static Std_ReturnType TIMER0_ConfigTimerDelay(const TIMER0_InitTypeDef * const I
         switch (InitPtr->Resolution)
         {
             case TIMER0_RESOLUTION_8BIT:
-                TIMER0_nOverflows = (uint16)(loc_TotalTicks / 256U);
-                TIMER0_InitialPreload = (uint16)(256U - (loc_TotalTicks % 256U));
+                TIMER0_nRequiredInterrupts = (uint16)(loc_TotalTicks / 256U);
+                TIMER0_DelayValue = (uint16)(256U - (loc_TotalTicks % 256U));
                 break;
 
             case TIMER0_RESOLUTION_16BIT:
-                TIMER0_nOverflows = (uint16)(loc_TotalTicks / 65536U);
-                TIMER0_InitialPreload = (uint16)(65536U - (loc_TotalTicks % 65536U));
+                TIMER0_nRequiredInterrupts = (uint16)(loc_TotalTicks / 65536U);
+                TIMER0_DelayValue = (uint16)(65536U - (loc_TotalTicks % 65536U));
                 break;
 
             default:
                 loc_ret = E_NOT_OK;
         }
 
-        loc_ret |= TIMER0_SetPreload(InitPtr, TIMER0_InitialPreload);
+        loc_ret |= TIMER0_SetPreload(InitPtr, TIMER0_DelayValue);
     }
     else
     {
@@ -356,15 +356,15 @@ void TIMER0_ISR(void)
 {
     INTI_TIMER0_ClearFlag();
 
-    static uint16 overflowCounter;
+    static uint16 interruptCounter;
 
-    if ((NULL_PTR != TIMER0_InterruptHandler) && (overflowCounter++ == TIMER0_nOverflows))
+    if ((NULL_PTR != TIMER0_InterruptHandler) && (interruptCounter++ == TIMER0_nRequiredInterrupts))
     {
-        TIMER0_SetPreload(TIMER0_ObjBuffer, TIMER0_InitialPreload);
-
-        overflowCounter = 0;
+        TIMER0_SetPreload(TIMER0_ObjBuffer, TIMER0_DelayValue);
 
         TIMER0_InterruptHandler();
+        
+        interruptCounter = 0;
     }
 }
 #endif

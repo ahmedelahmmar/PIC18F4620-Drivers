@@ -206,6 +206,23 @@
     #endif
 #endif
 
+#define __INTI_TIMER3_ClearFlag()                                   (PIR2bits.TMR3IF = 0)    
+#define __INTI_TIMER3_Flag()                                        (PIR2bits.TMR3IF)  
+
+#if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
+
+#define __INTI_TIMER3_EnableInterrupt()                             (PIE2bits.TMR3IE = 1)
+#define __INTI_TIMER3_DisableInterrupt()                            (PIE2bits.TMR3IE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define __INTI_TIMER3_SetAsHighPriority()                       (IPR2bits.TMR3IP = 1)
+    #define __INTI_TIMER3_SetAsLowPriority()                        (IPR2bits.TMR3IP = 0)
+    #define __INTI_TIMER3_DeInitPriority()                          (__INTI_TIMER3_SetAsLowPriority())
+
+    #endif
+#endif
+
 #define __INTI_EUSART_TxFlag()                                      (PIR1bits.TXIF)
 #define __INTI_EUSART_RxFlag()                                      (PIR1bits.RCIF)
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
@@ -265,6 +282,10 @@ void TIMER1_ISR(void);
 
 #if (INTERRUPTS_TIMER2_INTERRUPTS_FEATURE == STD_ON)
 void TIMER2_ISR(void);
+#endif
+
+#if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
+void TIMER3_ISR(void);
 #endif
 
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)

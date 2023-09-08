@@ -187,6 +187,40 @@ void INTI_TIMER2_DisableInterrupt(void)
     #endif
 #endif
 
+void INTI_TIMER3_ClearFlag(void)
+{
+    __INTI_TIMER3_ClearFlag();
+}
+
+uint8 INTI_TIMER3_Flag(void)
+{
+    return (__INTI_TIMER3_Flag());
+}
+
+#if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
+void INTI_TIMER3_EnableInterrupt(void)
+{
+    __INTI_TIMER3_EnableInterrupt();
+}
+
+void INTI_TIMER3_DisableInterrupt(void)
+{
+    __INTI_TIMER3_DisableInterrupt();
+}
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_TIMER3_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority)
+    {
+        (INTERRUPTS_HIGH_PRIORITY == loc_priority) ? __INTI_TIMER3_SetAsHighPriority() : __INTI_TIMER3_SetAsLowPriority();
+    }
+
+    void INTI_TIMER3_DeInitPriority(void)
+    {
+        __INTI_TIMER3_DeInitPriority();
+    }
+    #endif
+#endif
+
 uint8 INTI_EUSART_TxFlag(void)
 {
     return (__INTI_EUSART_TxFlag());

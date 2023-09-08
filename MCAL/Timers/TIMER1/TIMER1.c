@@ -8,8 +8,8 @@
 #include "../Timers_Private.h"
 #include "TIMER1.h"
 
-static uint16 TIMER1_nOverflows = 0;
-static uint16 TIMER1_InitialPreload = 0;
+static uint16 TIMER1_nRequiredInterrupts = 0;
+static uint16 TIMER1_DelayValue = 0;
 static const TIMER1_InitTypeDef * TIMER1_ObjBuffer = NULL_PTR;
 
 #if (INTERRUPTS_TIMER1_INTERRUPTS_FEATURE == STD_ON)
@@ -256,10 +256,10 @@ static Std_ReturnType TIMER1_ConfigTimerDelay(const TIMER1_InitTypeDef * const I
 
         uint32 loc_TotalTicks = ((loc_delay_ms * 1000U) / loc_TickTime_us);
 
-        TIMER1_nOverflows = (uint16)(loc_TotalTicks / 65536U);
-        TIMER1_InitialPreload = (uint16)(65536U - (loc_TotalTicks % 65536U));
+        TIMER1_nRequiredInterrupts = (uint16)(loc_TotalTicks / 65536U);
+        TIMER1_DelayValue = (uint16)(65536U - (loc_TotalTicks % 65536U));
 
-        loc_ret |= TIMER1_SetPreload(InitPtr, TIMER1_InitialPreload);
+        loc_ret |= TIMER1_SetPreload(InitPtr, TIMER1_DelayValue);
     }
     else
     {
@@ -287,15 +287,15 @@ void TIMER1_ISR(void)
 {
     INTI_TIMER1_ClearFlag();
 
-    static uint16 overflowCounter;
+    static uint16 interruptCounter;
 
-    if ((NULL_PTR != TIMER1_InterruptHandler) && (overflowCounter++ == TIMER1_nOverflows))
+    if ((NULL_PTR != TIMER1_InterruptHandler) && (interruptCounter++ == TIMER1_nRequiredInterrupts))
     {
-        TIMER1_SetPreload(TIMER1_ObjBuffer, TIMER1_InitialPreload);
-
-        overflowCounter = 0;
+        TIMER1_SetPreload(TIMER1_ObjBuffer, TIMER1_DelayValue);
 
         TIMER1_InterruptHandler();
+
+        interruptCounter = 0;
     }
 }
 #endif

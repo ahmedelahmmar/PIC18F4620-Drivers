@@ -48,6 +48,13 @@ void __interrupt() InterruptHandler(void)
     }
     #endif
 
+    #if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
+    if (INTI_TIMER3_Flag())
+    {
+        TIMER3_ISR();
+    }
+    #endif
+
     #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
         #if (INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE == STD_ON)
         if (INTI_EUSART_RxFlag())

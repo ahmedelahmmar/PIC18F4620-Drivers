@@ -79,6 +79,14 @@
 #define INTERRUPTS_TIMER2_INTERRUPTS_FEATURE           STD_ON
 
 /**
+ * @def INTERRUPTS_TIMER3_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the interrupts for Timer3.
+ *     - STD_ON: Enable Timer3 interrupts.
+ *     - STD_OFF: Disable Timer3 interrupts.
+ */
+#define INTERRUPTS_TIMER3_INTERRUPTS_FEATURE           STD_ON
+
+/**
  * @def INTERRUPTS_EUSART_INTERRUPTS_FEATURE
  * @brief Control macro to enable or disable the interrupts for the EUSART module.
  *     - STD_ON: Enable EUSART interrupts.

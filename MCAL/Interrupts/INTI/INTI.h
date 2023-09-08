@@ -96,6 +96,23 @@ void INTI_TIMER2_DisableInterrupt(void);
     #endif
 #endif
 
+#if ((INTERRUPTS_TIMER3_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE != STD_OFF))
+#warning "'INTERRUPTS_TIMER3_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
+#endif
+
+void INTI_TIMER3_ClearFlag(void);
+uint8 INTI_TIMER3_Flag(void);
+
+#if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
+void INTI_TIMER3_EnableInterrupt(void);
+void INTI_TIMER3_DisableInterrupt(void);
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_TIMER3_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+    void INTI_TIMER3_DeInitPriority(void);
+    #endif
+#endif
+
 #if ((INTERRUPTS_EUSART_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_EUSART_INTERRUPTS_FEATURE != STD_OFF))
 #warning "'INTERRUPTS_EUSART_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
 #endif

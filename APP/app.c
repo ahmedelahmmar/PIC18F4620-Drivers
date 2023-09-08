@@ -10,6 +10,7 @@
 void TIMER0_Handler(void);
 void TIMER1_Handler(void);
 void TIMER2_Handler(void);
+void TIMER3_Handler(void);
 
 TIMER0_InitTypeDef TIMER0 = {
     .Mode = TIMER0_MODE_TIMER,
@@ -29,6 +30,12 @@ TIMER2_InitTypeDef TIMER2 = {
     .Prescaler = TIMER2_PRESCALER_16,
     .Postscaler = TIMER2_POSTSCALER_16,
     .InterruptHandler = TIMER2_Handler
+};
+
+TIMER3_InitTypeDef TIMER3 = {
+    .Mode = TIMER3_MODE_TIMER,
+    .Prescaler = TIMER3_PRESCALER_8,
+    .InterruptHandler = TIMER3_Handler
 };
 
 LED_InitTypeDef LED1 = {
@@ -52,21 +59,33 @@ LED_InitTypeDef LED3 = {
     .Status = LED_OFF
 };
 
+LED_InitTypeDef LED4 = {
+    .Channel.Port = GPIO_PORTC,
+    .Channel.Pin = GPIO_PIN3,
+    .Configuration = LED_ACTIVE_HIGH,
+    .Status = LED_OFF
+};
+
+Std_ReturnType ErrorStatus = E_OK;
+
 int main(void)
 {
     INTI_EnableInterrupts();
 
-    LED_Init(&LED1);
-    LED_Init(&LED2);
-    LED_Init(&LED3);
+    ErrorStatus |= LED_Init(&LED1);
+    ErrorStatus |= LED_Init(&LED2);
+    ErrorStatus |= LED_Init(&LED3);
+    ErrorStatus |= LED_Init(&LED4);
 
-    TIMER0_Init(&TIMER0);
-    TIMER1_Init(&TIMER1);
-    TIMER2_Init(&TIMER2);
+    ErrorStatus |= TIMER0_Init(&TIMER0);
+    ErrorStatus |= TIMER1_Init(&TIMER1);
+    ErrorStatus |= TIMER2_Init(&TIMER2);
+    ErrorStatus |= TIMER3_Init(&TIMER3);
 
-    TIMER0_StartTimer(&TIMER0, 500);
-    TIMER1_StartTimer(&TIMER1, 1000);
-    TIMER2_StartTimer(&TIMER2, 2000);
+    ErrorStatus |= TIMER0_StartTimer(&TIMER0, 200);
+    ErrorStatus |= TIMER1_StartTimer(&TIMER1, 400);
+    ErrorStatus |= TIMER2_StartTimer(&TIMER2, 800);
+    ErrorStatus |= TIMER3_StartTimer(&TIMER3, 1600);
 
     while (1);
 
@@ -86,4 +105,9 @@ void TIMER1_Handler(void)
 void TIMER2_Handler(void)
 {
     LED_Toggle(&LED3);
+}
+
+void TIMER3_Handler(void)
+{
+    LED_Toggle(&LED4);
 }

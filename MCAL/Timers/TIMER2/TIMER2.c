@@ -8,10 +8,8 @@
 #include "../Timers_Private.h"
 #include "TIMER2.h"
 
-static uint8  TIMER2_InitialPreload = 0;
-static uint8  TIMER2_CompareValue = 0;
-static uint16 TIMER2_nOverflows = 0;
-static uint16 TIMER2_nMatches = 0;
+static uint8  TIMER2_DelayValue = 0;
+static uint16 TIMER2_nRequiredInterrupts = 0;
 
 static const TIMER2_InitTypeDef * TIMER2_ObjBuffer = NULL_PTR;
 
@@ -269,10 +267,10 @@ static Std_ReturnType TIMER2_ConfigTimerDelay(const TIMER2_InitTypeDef * const I
         {
             case TIMER2_MODE_NORMAL:  
 
-                TIMER2_nOverflows = (uint16)(loc_TotalTicks / 256U);
-                TIMER2_InitialPreload = (uint8)(256U - (loc_TotalTicks % 256U));
+                TIMER2_nRequiredInterrupts = (uint16)(loc_TotalTicks / 256U);
+                TIMER2_DelayValue = (uint8)(256U - (loc_TotalTicks % 256U));
 
-                loc_ret |= TIMER2_SetPreload(InitPtr, TIMER2_InitialPreload);
+                loc_ret |= TIMER2_SetPreload(InitPtr, TIMER2_DelayValue);
                 loc_ret |= TIMER2_SetCompareValue(InitPtr, 0xFF);
 
                 break;
@@ -283,11 +281,11 @@ static Std_ReturnType TIMER2_ConfigTimerDelay(const TIMER2_InitTypeDef * const I
 
                 while (loc_TotalTicks % loc_divFactor) --loc_divFactor;
 
-                TIMER2_nMatches = (uint16)(loc_TotalTicks / loc_divFactor);
-                TIMER2_CompareValue = (uint8)(loc_divFactor - 1);
+                TIMER2_nRequiredInterrupts = (uint16)(loc_TotalTicks / loc_divFactor);
+                TIMER2_DelayValue = (uint8)(loc_divFactor - 1);
 
                 loc_ret |= TIMER2_SetPreload(InitPtr, 0);
-                loc_ret |= TIMER2_SetCompareValue(InitPtr, TIMER2_CompareValue);
+                loc_ret |= TIMER2_SetCompareValue(InitPtr, TIMER2_DelayValue);
 
                 break;
 
@@ -327,37 +325,15 @@ void TIMER2_ISR(void)
 {
     INTI_TIMER2_ClearFlag();
 
-    static uint16 overflowCounter;
-    static uint16 matchCounter;
+    static uint16 interruptCounter;
 
-    switch (TIMER2_ObjBuffer->Mode)
+    if ((NULL_PTR != TIMER2_InterruptHandler) && (interruptCounter++ == TIMER2_nRequiredInterrupts))
     {
-        case TIMER2_MODE_NORMAL:
+        TIMER2_SetPreload(TIMER2_ObjBuffer, TIMER2_DelayValue);
 
-            if ((NULL_PTR != TIMER2_InterruptHandler) && (overflowCounter++ == TIMER2_nOverflows))
-            {
-                TIMER2_SetPreload(TIMER2_ObjBuffer, TIMER2_InitialPreload);
+        TIMER2_InterruptHandler();
 
-                overflowCounter = 0;
-
-                TIMER2_InterruptHandler();
-            }
-
-            break;
-
-        case TIMER2_MODE_COMPARE_MATCH:
-
-            if ((NULL_PTR != TIMER2_InterruptHandler) && (matchCounter++ == TIMER2_nMatches))
-            {
-                matchCounter = 0;
-
-                TIMER2_InterruptHandler();
-            }
-            
-            break; 
-
-        default:
-            break;
+        interruptCounter = 0;
     }
 }
 #endif
