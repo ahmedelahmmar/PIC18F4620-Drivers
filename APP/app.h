@@ -13,6 +13,7 @@
 #include "../MCAL/EEPROM/EEPROM.h"
 #include "../MCAL/Timers/TIMER0/TIMER0.h"
 #include "../MCAL/Timers/TIMER1/TIMER1.h"
+#include "../MCAL/Timers/TIMER2/TIMER2.h"
 #include "../MCAL/EUSART/EUSART.h"
 
 #include "../ECUAL/LCD/LCD.h"

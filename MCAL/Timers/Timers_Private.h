@@ -43,4 +43,11 @@
 #define __TIMER1_CounterRegisterLow()               (TMR1L)
 #define __TIMER1_CounterRegisterHigh()              (TMR1H)
 
+#define __TIMER2_Enable()                           (T2CONbits.TMR2ON = 1)
+#define __TIMER2_Disable()                          (T2CONbits.TMR2ON = 0)       
+#define __TIMER2_ConfigPostscaler(x)                (T2CONbits.TOUTPS = x)
+#define __TIMER2_ConfigPrescaler(x)                 (T2CONbits.T2CKPS = x) 
+#define __TIMER2_CounterRegister()                  (TMR2)
+#define __TIMER2_CompareRegister()                  (PR2)
+
 #endif /* _TIMERS_PRIVATE_H_ */

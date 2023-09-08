@@ -42,11 +42,11 @@ void INTI_SetInterruptStatus(uint8 Status)
     switch (Status)
     {
         case 0:
-        INTERRUPTS_EnableAllGlobalInterrupts();
+        INTI_DisableInterrupts();
             break;
 
         case 1:
-        INTERRUPTS_DisableAllGlobalInterrupts();
+        INTI_EnableInterrupts();
             break;
     }
 }
@@ -149,6 +149,40 @@ void INTI_TIMER1_DisableInterrupt(void)
     void INTI_TIMER1_DeInitPriority(void)
     {
         __INTI_TIMER1_DeInitPriority();
+    }
+    #endif
+#endif
+
+void INTI_TIMER2_ClearFlag(void)
+{
+    __INTI_TIMER2_ClearFlag();
+}
+
+uint8 INTI_TIMER2_Flag(void)
+{
+    return (__INTI_TIMER2_Flag());
+}
+
+#if (INTERRUPTS_TIMER2_INTERRUPTS_FEATURE == STD_ON)
+void INTI_TIMER2_EnableInterrupt(void)
+{
+    __INTI_TIMER2_EnableInterrupt();
+}
+
+void INTI_TIMER2_DisableInterrupt(void)
+{
+    __INTI_TIMER2_DisableInterrupt();
+}
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_TIMER2_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority)
+    {
+        (INTERRUPTS_HIGH_PRIORITY == loc_priority) ? __INTI_TIMER2_SetAsHighPriority() : __INTI_TIMER2_SetAsLowPriority();
+    }
+
+    void INTI_TIMER2_DeInitPriority(void)
+    {
+        __INTI_TIMER2_DeInitPriority();
     }
     #endif
 #endif

@@ -189,6 +189,23 @@
     #endif
 #endif
 
+#define __INTI_TIMER2_ClearFlag()                                   (PIR1bits.TMR2IF = 0)    
+#define __INTI_TIMER2_Flag()                                        (PIR1bits.TMR2IF)  
+
+#if (INTERRUPTS_TIMER2_INTERRUPTS_FEATURE == STD_ON)
+
+#define __INTI_TIMER2_EnableInterrupt()                             (PIE1bits.TMR2IE = 1)
+#define __INTI_TIMER2_DisableInterrupt()                            (PIE1bits.TMR2IE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define __INTI_TIMER2_SetAsHighPriority()                       (IPR1bits.TMR2IP = 1)
+    #define __INTI_TIMER2_SetAsLowPriority()                        (IPR1bits.TMR2IP = 0)
+    #define __INTI_TIMER2_DeInitPriority()                          (__INTI_TIMER2_SetAsLowPriority())
+
+    #endif
+#endif
+
 #define __INTI_EUSART_TxFlag()                                      (PIR1bits.TXIF)
 #define __INTI_EUSART_RxFlag()                                      (PIR1bits.RCIF)
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
@@ -246,14 +263,18 @@ void TIMER0_ISR(void);
 void TIMER1_ISR(void);
 #endif
 
-#if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
-#if (INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE == STD_ON)
-void EUSART_RX_ISR(void);
+#if (INTERRUPTS_TIMER2_INTERRUPTS_FEATURE == STD_ON)
+void TIMER2_ISR(void);
 #endif
 
-#if (INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE == STD_ON)
-void EUSART_TX_ISR(void);
-#endif
+#if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
+    #if (INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE == STD_ON)
+    void EUSART_RX_ISR(void);
+    #endif
+
+    #if (INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE == STD_ON)
+    void EUSART_TX_ISR(void);
+    #endif
 #endif
 
 #endif	/* _INTERRUPTS_PRIVATE_H_ */
