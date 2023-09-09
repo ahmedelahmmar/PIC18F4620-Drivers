@@ -283,33 +283,32 @@ static Std_ReturnType TIMER0_ConfigTimerDelay(const TIMER0_InitTypeDef * const I
 {
     Std_ReturnType loc_ret = E_OK;
 
-    if ((InitPtr->Prescaler < TIMER0_PRESCALER_LIMIT) || (TIMER0_NO_PRESCALER == InitPtr->Prescaler))
+    if (InitPtr->Prescaler < TIMER0_PRESCALER_LIMIT)
     {
-        uint16 loc_TickTime_us = 0;
-
+        uint16 loc_PrescalerValue = (TIMER0_NO_PRESCALER == InitPtr->Prescaler) ? (uint8)(1) : (uint8)(2 << InitPtr->Prescaler);
         // FOSC/4 is the default clock for TIMER0 even with the prescaler disabled.
-
-        if (TIMER0_NO_PRESCALER == InitPtr->Prescaler)
-        {
-            loc_TickTime_us = (uint16)(4 / (uint32)(FOSC / 1000000UL));
-        }
-        else
-        {
-            loc_TickTime_us = (uint16)(((uint16)(2 << InitPtr->Prescaler) * 4) / (uint32)(FOSC / 1000000UL));
-        }
+        uint16 loc_TickTime_us = (uint16)(((uint32)(loc_PrescalerValue * 4)) / (uint32)(FOSC / 1000000UL));
 
         uint32 loc_TotalTicks = ((loc_delay_ms * 1000U) / loc_TickTime_us);
 
         switch (InitPtr->Resolution)
         {
             case TIMER0_RESOLUTION_8BIT:
+
                 TIMER0_nRequiredInterrupts = (uint16)(loc_TotalTicks / 256U);
                 TIMER0_DelayValue = (uint16)(256U - (loc_TotalTicks % 256U));
+
+                if (0 != (loc_TotalTicks % 256U)) ++TIMER0_nRequiredInterrupts;
+
                 break;
 
             case TIMER0_RESOLUTION_16BIT:
+
                 TIMER0_nRequiredInterrupts = (uint16)(loc_TotalTicks / 65536U);
                 TIMER0_DelayValue = (uint16)(65536U - (loc_TotalTicks % 65536U));
+
+                if (0 != (loc_TotalTicks % 65536U)) ++TIMER0_nRequiredInterrupts;
+
                 break;
 
             default:
@@ -358,7 +357,7 @@ void TIMER0_ISR(void)
 
     static uint16 interruptCounter;
 
-    if ((NULL_PTR != TIMER0_InterruptHandler) && (interruptCounter++ == TIMER0_nRequiredInterrupts))
+    if ((NULL_PTR != TIMER0_InterruptHandler) && (++interruptCounter == TIMER0_nRequiredInterrupts))
     {
         TIMER0_SetPreload(TIMER0_ObjBuffer, TIMER0_DelayValue);
 

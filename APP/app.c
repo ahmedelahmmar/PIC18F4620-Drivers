@@ -14,8 +14,8 @@ void TIMER3_Handler(void);
 
 TIMER0_InitTypeDef TIMER0 = {
     .Mode = TIMER0_MODE_TIMER,
-    .Resolution = TIMER0_RESOLUTION_16BIT,
-    .Prescaler = TIMER0_PRESCALER_256,
+    .Resolution = TIMER0_RESOLUTION_8BIT,
+    .Prescaler = TIMER0_PRESCALER_32,
     .InterruptHandler = TIMER0_Handler
 };
 

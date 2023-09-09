@@ -8,8 +8,8 @@
 #include "../Timers_Private.h"
 #include "TIMER3.h"
 
-static uint16 TIMER1_nRequiredInterrupts = 0;
-static uint16 TIMER1_DelayValue = 0;
+static uint16 TIMER3_nRequiredInterrupts = 0;
+static uint16 TIMER3_DelayValue = 0;
 static const TIMER3_InitTypeDef * TIMER3_ObjBuffer = NULL_PTR;
 
 #if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
@@ -256,10 +256,12 @@ static Std_ReturnType TIMER3_ConfigTimerDelay(const TIMER3_InitTypeDef * const I
 
         uint32 loc_TotalTicks = ((loc_delay_ms * 1000U) / loc_TickTime_us);
 
-        TIMER1_nRequiredInterrupts = (uint16)(loc_TotalTicks / 65536U);
-        TIMER1_DelayValue = (uint16)(65536U - (loc_TotalTicks % 65536U));
+        TIMER3_nRequiredInterrupts = (uint16)(loc_TotalTicks / 65536U);
+        TIMER3_DelayValue = (uint16)(65536U - (loc_TotalTicks % 65536U));
 
-        loc_ret |= TIMER3_SetPreload(InitPtr, TIMER1_DelayValue);
+        if (0 != (loc_TotalTicks % 65536U)) ++TIMER3_nRequiredInterrupts;
+
+        loc_ret |= TIMER3_SetPreload(InitPtr, TIMER3_DelayValue);
     }
     else
     {
@@ -289,9 +291,9 @@ void TIMER3_ISR(void)
 
     static uint16 interruptCounter;
 
-    if ((NULL_PTR != TIMER3_InterruptHandler) && (interruptCounter++ == TIMER1_nRequiredInterrupts))
+    if ((NULL_PTR != TIMER3_InterruptHandler) && (++interruptCounter == TIMER3_nRequiredInterrupts))
     {
-        TIMER3_SetPreload(TIMER3_ObjBuffer, TIMER1_DelayValue);
+        TIMER3_SetPreload(TIMER3_ObjBuffer, TIMER3_DelayValue);
 
         TIMER3_InterruptHandler();
 

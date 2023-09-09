@@ -270,6 +270,8 @@ static Std_ReturnType TIMER2_ConfigTimerDelay(const TIMER2_InitTypeDef * const I
                 TIMER2_nRequiredInterrupts = (uint16)(loc_TotalTicks / 256U);
                 TIMER2_DelayValue = (uint8)(256U - (loc_TotalTicks % 256U));
 
+                if (0 != (loc_TotalTicks % 256U)) ++TIMER2_nRequiredInterrupts;
+
                 loc_ret |= TIMER2_SetPreload(InitPtr, TIMER2_DelayValue);
                 loc_ret |= TIMER2_SetCompareValue(InitPtr, 0xFF);
 
@@ -327,7 +329,7 @@ void TIMER2_ISR(void)
 
     static uint16 interruptCounter;
 
-    if ((NULL_PTR != TIMER2_InterruptHandler) && (interruptCounter++ == TIMER2_nRequiredInterrupts))
+    if ((NULL_PTR != TIMER2_InterruptHandler) && (++interruptCounter == TIMER2_nRequiredInterrupts))
     {
         TIMER2_SetPreload(TIMER2_ObjBuffer, TIMER2_DelayValue);
 

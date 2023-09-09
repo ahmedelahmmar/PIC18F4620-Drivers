@@ -92,7 +92,7 @@
  *     - STD_ON: Enable EUSART interrupts.
  *     - STD_OFF: Disable EUSART interrupts.
  */
-#define INTERRUPTS_EUSART_INTERRUPTS_FEATURE           STD_ON
+#define INTERRUPTS_EUSART_INTERRUPTS_FEATURE           STD_OFF
 
 /**
  * @def INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE
@@ -108,7 +108,7 @@
  *     - STD_ON: Enable reciever interrupts.
  *     - STD_OFF: Disable reciever interrupts.
  */
-#define INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE         STD_ON
+#define INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE         STD_OFF
 
 #endif	/* _INTERRUPTS_CONFIG_H_ */
 

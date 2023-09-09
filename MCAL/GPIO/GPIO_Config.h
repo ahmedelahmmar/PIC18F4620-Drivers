@@ -36,7 +36,7 @@
  *     - STD_ON: Include GPIO port interfaces in the build.
  *     - STD_OFF: Exclude GPIO port interfaces from the build.
  */
-#define GPIO_PORT_INTERFACES        STD_ON
+#define GPIO_PORT_INTERFACES        STD_OFF
 
 #endif	/* _GPIO_CONFIG_H_ */
 
