@@ -55,6 +55,20 @@ void __interrupt() InterruptHandler(void)
     }
     #endif
 
+    #if (INTERRUPTS_CCP1_INTERRUPTS_FEATURE == STD_ON)
+    if (INTI_CCP1_Flag())
+    {
+        CCP1_ISR();
+    }
+    #endif
+
+    #if (INTERRUPTS_CCP2_INTERRUPTS_FEATURE == STD_ON)
+    if (INTI_CCP2_Flag())
+    {
+        CCP2_ISR();
+    }
+    #endif
+
     #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
         #if (INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE == STD_ON)
         if (INTI_EUSART_RxFlag())

@@ -15,6 +15,7 @@
 #include "../MCAL/Timers/TIMER1/TIMER1.h"
 #include "../MCAL/Timers/TIMER2/TIMER2.h"
 #include "../MCAL/Timers/TIMER3/TIMER3.h"
+#include "../MCAL/CCP/CCP1/CCP1.h"
 #include "../MCAL/EUSART/EUSART.h"
 
 #include "../ECUAL/LCD/LCD.h"

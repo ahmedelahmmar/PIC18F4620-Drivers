@@ -113,6 +113,40 @@ void INTI_TIMER3_DisableInterrupt(void);
     #endif
 #endif
 
+#if ((INTERRUPTS_CCP1_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_CCP1_INTERRUPTS_FEATURE != STD_OFF))
+#warning "'INTERRUPTS_CCP1_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
+#endif
+
+void INTI_CCP1_ClearFlag(void);
+uint8 INTI_CCP1_Flag(void);
+
+#if (INTERRUPTS_CCP1_INTERRUPTS_FEATURE == STD_ON)
+void INTI_CCP1_EnableInterrupt(void);
+void INTI_CCP1_DisableInterrupt(void);
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_CCP1_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+    void INTI_CCP1_DeInitPriority(void);
+    #endif
+#endif
+
+#if ((INTERRUPTS_CCP2_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_CCP2_INTERRUPTS_FEATURE != STD_OFF))
+#warning "'INTERRUPTS_CCP2_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
+#endif
+
+void INTI_CCP2_ClearFlag(void);
+uint8 INTI_CCP2_Flag(void);
+
+#if (INTERRUPTS_CCP2_INTERRUPTS_FEATURE == STD_ON)
+void INTI_CCP2_EnableInterrupt(void);
+void INTI_CCP2_DisableInterrupt(void);
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_CCP2_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+    void INTI_CCP2_DeInitPriority(void);
+    #endif
+#endif
+
 #if ((INTERRUPTS_EUSART_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_EUSART_INTERRUPTS_FEATURE != STD_OFF))
 #warning "'INTERRUPTS_EUSART_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
 #endif

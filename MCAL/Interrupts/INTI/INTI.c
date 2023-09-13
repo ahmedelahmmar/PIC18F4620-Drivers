@@ -221,6 +221,74 @@ void INTI_TIMER3_DisableInterrupt(void)
     #endif
 #endif
 
+void INTI_CCP1_ClearFlag(void)
+{
+    __INTI_CCP1_ClearFlag();
+}
+
+uint8 INTI_CCP1_Flag(void)
+{
+    return (__INTI_CCP1_Flag());
+}
+
+#if (INTERRUPTS_CCP1_INTERRUPTS_FEATURE == STD_ON)
+void INTI_CCP1_EnableInterrupt(void)
+{
+    __INTI_CCP1_EnableInterrupt();
+}
+
+void INTI_CCP1_DisableInterrupt(void)
+{
+    __INTI_CCP1_DisableInterrupt();
+}
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_CCP1_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority)
+    {
+        (INTERRUPTS_HIGH_PRIORITY == loc_priority) ? __INTI_CCP1_SetAsHighPriority() : __INTI_CCP1_SetAsLowPriority();
+    }
+
+    void INTI_CCP1_DeInitPriority(void)
+    {
+        __INTI_CCP1_DeInitPriority();
+    }
+    #endif
+#endif
+
+void INTI_CCP2_ClearFlag(void)
+{
+    __INTI_CCP2_ClearFlag();
+}
+
+uint8 INTI_CCP2_Flag(void)
+{
+    return (__INTI_CCP2_Flag());
+}
+
+#if (INTERRUPTS_CCP2_INTERRUPTS_FEATURE == STD_ON)
+void INTI_CCP2_EnableInterrupt(void)
+{
+    __INTI_CCP2_EnableInterrupt();
+}
+
+void INTI_CCP2_DisableInterrupt(void)
+{
+    __INTI_CCP2_DisableInterrupt();
+}
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_CCP2_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority)
+    {
+        (INTERRUPTS_HIGH_PRIORITY == loc_priority) ? __INTI_CCP2_SetAsHighPriority() : __INTI_CCP2_SetAsLowPriority();
+    }
+
+    void INTI_CCP2_DeInitPriority(void)
+    {
+        __INTI_CCP2_DeInitPriority();
+    }
+    #endif
+#endif
+
 uint8 INTI_EUSART_TxFlag(void)
 {
     return (__INTI_EUSART_TxFlag());

@@ -52,7 +52,7 @@
  *     - STD_ON: Enable ADC interrupts.
  *     - STD_OFF: Disable ADC interrupts.
  */
-#define INTERRUPTS_ADC_INTERRUPTS_FEATURE              STD_OFF
+#define INTERRUPTS_ADC_INTERRUPTS_FEATURE               STD_OFF
 
 /**
  * @def INTERRUPTS_TIMER0_INTERRUPTS_FEATURE
@@ -60,7 +60,7 @@
  *     - STD_ON: Enable Timer0 interrupts.
  *     - STD_OFF: Disable Timer0 interrupts.
  */
-#define INTERRUPTS_TIMER0_INTERRUPTS_FEATURE           STD_ON
+#define INTERRUPTS_TIMER0_INTERRUPTS_FEATURE            STD_ON
 
 /**
  * @def INTERRUPTS_TIMER1_INTERRUPTS_FEATURE
@@ -68,7 +68,7 @@
  *     - STD_ON: Enable Timer1 interrupts.
  *     - STD_OFF: Disable Timer1 interrupts.
  */
-#define INTERRUPTS_TIMER1_INTERRUPTS_FEATURE           STD_ON
+#define INTERRUPTS_TIMER1_INTERRUPTS_FEATURE            STD_ON
 
 /**
  * @def INTERRUPTS_TIMER2_INTERRUPTS_FEATURE
@@ -76,7 +76,7 @@
  *     - STD_ON: Enable Timer2 interrupts.
  *     - STD_OFF: Disable Timer2 interrupts.
  */
-#define INTERRUPTS_TIMER2_INTERRUPTS_FEATURE           STD_ON
+#define INTERRUPTS_TIMER2_INTERRUPTS_FEATURE            STD_OFF
 
 /**
  * @def INTERRUPTS_TIMER3_INTERRUPTS_FEATURE
@@ -84,7 +84,23 @@
  *     - STD_ON: Enable Timer3 interrupts.
  *     - STD_OFF: Disable Timer3 interrupts.
  */
-#define INTERRUPTS_TIMER3_INTERRUPTS_FEATURE           STD_ON
+#define INTERRUPTS_TIMER3_INTERRUPTS_FEATURE            STD_ON
+
+/**
+ * @def INTERRUPTS_CCP1_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the interrupts for CCP1.
+ *     - STD_ON: Enable CCP1 interrupts.
+ *     - STD_OFF: Disable CCP1 interrupts.
+ */
+#define INTERRUPTS_CCP1_INTERRUPTS_FEATURE              STD_ON
+
+/**
+ * @def INTERRUPTS_CCP2_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the interrupts for CCP2.
+ *     - STD_ON: Enable CCP2 interrupts.
+ *     - STD_OFF: Disable CCP2 interrupts.
+ */
+#define INTERRUPTS_CCP2_INTERRUPTS_FEATURE              STD_OFF
 
 /**
  * @def INTERRUPTS_EUSART_INTERRUPTS_FEATURE
@@ -92,7 +108,7 @@
  *     - STD_ON: Enable EUSART interrupts.
  *     - STD_OFF: Disable EUSART interrupts.
  */
-#define INTERRUPTS_EUSART_INTERRUPTS_FEATURE           STD_OFF
+#define INTERRUPTS_EUSART_INTERRUPTS_FEATURE            STD_OFF
 
 /**
  * @def INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE

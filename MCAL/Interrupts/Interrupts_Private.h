@@ -223,6 +223,40 @@
     #endif
 #endif
 
+#define __INTI_CCP1_ClearFlag()                                   (PIR1bits.CCP1IF = 0)    
+#define __INTI_CCP1_Flag()                                        (PIR1bits.CCP1IF)  
+
+#if (INTERRUPTS_CCP1_INTERRUPTS_FEATURE == STD_ON)
+
+#define __INTI_CCP1_EnableInterrupt()                             (PIE1bits.CCP1IE = 1)
+#define __INTI_CCP1_DisableInterrupt()                            (PIE1bits.CCP1IE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define __INTI_CCP1_SetAsHighPriority()                       (IPR1bits.CCP1IP = 1)
+    #define __INTI_CCP1_SetAsLowPriority()                        (IPR1bits.CCP1IP = 0)
+    #define __INTI_CCP1_DeInitPriority()                          (__INTI_CCP1_SetAsLowPriority())
+
+    #endif
+#endif
+
+#define __INTI_CCP2_ClearFlag()                                   (PIR2bits.CCP2IF = 0)    
+#define __INTI_CCP2_Flag()                                        (PIR2bits.CCP2IF)  
+
+#if (INTERRUPTS_CCP2_INTERRUPTS_FEATURE == STD_ON)
+
+#define __INTI_CCP2_EnableInterrupt()                             (PIE2bits.CCP2IE = 1)
+#define __INTI_CCP2_DisableInterrupt()                            (PIE2bits.CCP2IE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define __INTI_CCP2_SetAsHighPriority()                       (IPR2bits.CCP2IP = 1)
+    #define __INTI_CCP2_SetAsLowPriority()                        (IPR2bits.CCP2IP = 0)
+    #define __INTI_CCP2_DeInitPriority()                          (__INTI_CCP2_SetAsLowPriority())
+
+    #endif
+#endif
+
 #define __INTI_EUSART_TxFlag()                                      (PIR1bits.TXIF)
 #define __INTI_EUSART_RxFlag()                                      (PIR1bits.RCIF)
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
@@ -286,6 +320,14 @@ void TIMER2_ISR(void);
 
 #if (INTERRUPTS_TIMER3_INTERRUPTS_FEATURE == STD_ON)
 void TIMER3_ISR(void);
+#endif
+
+#if (INTERRUPTS_CCP1_INTERRUPTS_FEATURE == STD_ON)
+void CCP1_ISR(void);
+#endif
+
+#if (INTERRUPTS_CCP2_INTERRUPTS_FEATURE == STD_ON)
+void CCP2_ISR(void);
 #endif
 
 #if (INTERRUPTS_EUSART_INTERRUPTS_FEATURE == STD_ON)
