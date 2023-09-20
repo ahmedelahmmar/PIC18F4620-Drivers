@@ -126,5 +126,13 @@
  */
 #define INTERRUPTS_EUSART_RX_INTERRUPTS_FEATURE         STD_OFF
 
+/**
+ * @def INTERRUPTS_SPI_INTERRUPTS_FEATURE
+ * @brief Control macro to enable or disable the interrupts for the SPI module.
+ *     - STD_ON: Enable SPI interrupts.
+ *     - STD_OFF: Disable SPI interrupts.
+ */
+#define INTERRUPTS_SPI_INTERRUPTS_FEATURE               STD_OFF
+
 #endif	/* _INTERRUPTS_CONFIG_H_ */
 

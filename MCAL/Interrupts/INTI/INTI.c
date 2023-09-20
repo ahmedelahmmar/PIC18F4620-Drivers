@@ -348,3 +348,37 @@ uint8 INTI_EUSART_RxFlag(void)
         #endif
     #endif  
 #endif
+
+void INTI_SPI_ClearFlag(void)
+{
+    __INTI_SPI_ClearFlag();
+}
+
+uint8 INTI_SPI_Flag(void)
+{
+    return (__INTI_SPI_Flag());
+}
+
+#if (INTERRUPTS_SPI_INTERRUPTS_FEATURE == STD_ON)
+void INTI_SPI_EnableInterrupt(void)
+{
+    __INTI_SPI_EnableInterrupt();
+}
+
+void INTI_SPI_DisableInterrupt(void)
+{
+    __INTI_SPI_DisableInterrupt();
+}
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_SPI_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority)
+    {
+        (INTERRUPTS_HIGH_PRIORITY == loc_priority) ? __INTI_SPI_SetAsHighPriority() : __INTI_SPI_SetAsLowPriority();
+    }
+
+    void INTI_SPI_DeInitPriority(void)
+    {
+        __INTI_SPI_DeInitPriority();
+    }
+    #endif
+#endif

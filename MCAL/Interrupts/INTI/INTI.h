@@ -167,10 +167,10 @@ uint8 INTI_EUSART_RxFlag(void);
     void INTI_EUSART_EnableTxInterrupt(void);
     void INTI_EUSART_DisableTxInterrupt(void);
 
-    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
-    void INTI_EUSART_SetTxPriority(INTERRUPTS_PriorityTypeDef loc_priority);
-    void INTI_EUSART_DeInitTxPriority(void);
-    #endif
+        #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+        void INTI_EUSART_SetTxPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+        void INTI_EUSART_DeInitTxPriority(void);
+        #endif
 
     #endif
 
@@ -178,14 +178,30 @@ uint8 INTI_EUSART_RxFlag(void);
     void INTI_EUSART_EnableRxInterrupt(void);
     void INTI_EUSART_DisableRxInterrupt(void);
 
-    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
-    void INTI_EUSART_SetRxPriority(INTERRUPTS_PriorityTypeDef loc_priority);
-    void INTI_EUSART_DeInitRxPriority(void);
-    #endif
+        #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+        void INTI_EUSART_SetRxPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+        void INTI_EUSART_DeInitRxPriority(void);
+        #endif
 
     #endif
 
 #endif
 
+#if ((INTERRUPTS_SPI_INTERRUPTS_FEATURE != STD_ON) && (INTERRUPTS_SPI_INTERRUPTS_FEATURE != STD_OFF))
+#warning "'INTERRUPTS_SPI_INTERRUPTS_FEATURE' not configured in Interrupts_Config.h"
+#endif
+
+void INTI_SPI_ClearFlag(void);
+uint8 INTI_SPI_Flag(void);
+
+#if (INTERRUPTS_SPI_INTERRUPTS_FEATURE == STD_ON)
+void INTI_SPI_EnableInterrupt(void);
+void INTI_SPI_DisableInterrupt(void);
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+    void INTI_SPI_SetPriority(INTERRUPTS_PriorityTypeDef loc_priority);
+    void INTI_SPI_DeInitPriority(void);
+    #endif
+#endif
 
 #endif /* _INTI_H_ */

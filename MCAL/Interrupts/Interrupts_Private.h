@@ -281,6 +281,23 @@
     #endif
 #endif
 
+#define __INTI_SPI_ClearFlag()                                   (PIR1bits.SSPIF = 0)    
+#define __INTI_SPI_Flag()                                        (PIR1bits.SSPIF)  
+
+#if (INTERRUPTS_SPI_INTERRUPTS_FEATURE == STD_ON)
+
+#define __INTI_SPI_EnableInterrupt()                             (PIE1bits.SSPIE = 1)
+#define __INTI_SPI_DisableInterrupt()                            (PIE1bits.SSPIE = 0)
+
+    #if (INTERRUPTS_PRIORITY_FEATURE == STD_ON)
+
+    #define __INTI_SPI_SetAsHighPriority()                       (IPR1bits.SSPIP = 1)
+    #define __INTI_SPI_SetAsLowPriority()                        (IPR1bits.SSPIP = 0)
+    #define __INTI_SPI_DeInitPriority()                          (__INTI_SPI_SetAsLowPriority())
+
+    #endif
+#endif
+
 
 #if (INTERRUPTS_INTx_INTERRUPTS_FEATURE == STD_ON)
 void EXTI_INT0_ISR(void);
@@ -338,6 +355,10 @@ void CCP2_ISR(void);
     #if (INTERRUPTS_EUSART_TX_INTERRUPTS_FEATURE == STD_ON)
     void EUSART_TX_ISR(void);
     #endif
+#endif
+
+#if (INTERRUPTS_SPI_INTERRUPTS_FEATURE == STD_ON)
+void SPI_ISR(void);
 #endif
 
 #endif	/* _INTERRUPTS_PRIVATE_H_ */

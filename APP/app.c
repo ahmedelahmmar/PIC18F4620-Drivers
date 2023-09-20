@@ -7,18 +7,11 @@
 
 #include "app.h"
 
-void CCP1_Handler(void);
-
-TIMER2_InitTypeDef TIMER2 = {
-    .Mode = TIMER2_MODE_NORMAL,
-    .Prescaler = TIMER2_PRESCALER_16,
-    .Postscaler = TIMER2_POSTSCALER_10,
-};
-
-CCP1_InitTypeDef CCP1 = {
-    .Mode = CCP1_MODE_PWM,
-    .TIMER2Ptr = &TIMER2,
-    .InterruptHandler = CCP1_Handler,
+SPI_InitTypeDef SPI = {
+    .Mode = SPI_MODE_MASTER_PRESCALER_64,
+    .SampleTime = SPI_SAMPLE_TIME_MIDDLE_OF_DATA,
+    .SetupTime = SPI_SETUP_TIME_LEADING_EDGE,
+    .ClockPolarity = SPI_CLOCK_POLARITY_LOW
 };
 
 Std_ReturnType ErrorStatus = E_OK;
@@ -27,17 +20,12 @@ int main(void)
 {
     INTI_EnableInterrupts();
 
-    TIMER2_Init(&TIMER2);
-    CCP1_Init(&CCP1);
-
-    CCP1_PWM_SetFrequency(&CCP1, 500);
-    CCP1_PWM_SetDutyCycle(&CCP1, 75);
-
-    CCP1_PWM_Start(&CCP1);
+    ErrorStatus |= SPI_Init(&SPI);
 
     while (1)
     {
-
+        ErrorStatus |= SPI_SendData(&SPI, 'X');
+        DELAY_MS(500);
     }
 
     return 0;

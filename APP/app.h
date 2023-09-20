@@ -17,6 +17,7 @@
 #include "../MCAL/Timers/TIMER3/TIMER3.h"
 #include "../MCAL/CCP/CCP1/CCP1.h"
 #include "../MCAL/EUSART/EUSART.h"
+#include "../MCAL/SPI/SPI.h"
 
 #include "../ECUAL/LCD/LCD.h"
 #include "../ECUAL/LED/LED.h"
